@@ -1,1 +1,3 @@
 com/antilamer/SpringWebAppApplication.class
+com/antilamer/controller/IndexController.class
+com/antilamer/config/JPAConfig.class
