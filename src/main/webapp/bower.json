@@ -1,0 +1,15 @@
+{
+  "name": "SpringBootApp",
+  "homepage": "https://github.com/Antilamer1709/SpringBootApp",
+  "authors": [
+    "Valerii Sloboda"
+  ],
+  "description": "Boot webapp",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+
+  "dependencies": {
+    "ckeditor": "4"
+  }
+}
