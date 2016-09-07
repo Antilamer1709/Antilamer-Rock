@@ -5,4 +5,7 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', functi
 
     $scope.hello = "Hello from AngularJS";
 
+    $scope.newUrl = "#/test2";
+
+
 }]);
