@@ -4,21 +4,17 @@ angular.module('mvcApp', ['ngRoute', 'ngAnimate', 'route-segment', 'view-segment
             .when('/', 'index')
             .when('/index', 'index')
             .when('/configuration', 'configuration')
-            .when('/test2', 'test2')
+            .when('/band/:bandId', 'band')
 
         $routeSegmentProvider.segment('index', {
-            templateUrl: 'HTML/test.html',
+            templateUrl: 'HTML/home.html',
             controller: 'IndexCtrl'
         });
 
-        $routeSegmentProvider.segment('configuration', {
-            templateUrl: 'HTML/test.html',
-            controller: 'ConfigurationCtrl'
-        });
-
-        $routeSegmentProvider.segment('test2', {
-            templateUrl: 'HTML/test2.html',
-            controller: 'Test2Ctrl'
+        $routeSegmentProvider.segment('band', {
+            templateUrl: 'HTML/band.html',
+            controller: 'BandCtrl',
+            dependencies: ['bandId']
         });
 
         $routeProvider.otherwise({redirectTo: '/'});

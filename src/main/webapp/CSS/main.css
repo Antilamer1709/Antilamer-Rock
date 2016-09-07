@@ -1,0 +1,182 @@
+body{
+    margin: 0;
+    font-family: Arial, Helmet, Freesans, sans-serif;
+    background: linear-gradient(#f4f2f2, #565454);
+}
+
+h1{
+    color: #0f0e0e;
+}
+
+#topbar{
+    background-color: #3a3737;
+    width: 100%;
+    height: 50px;
+    color: #c9c3c3;
+    position: fixed;
+    z-index: 10;
+}
+#topbar a{
+    position: relative;
+    left: 45%;
+    padding-top: 5px;
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 2.5em;
+    font-family: Impact, Charcoal, sans-serif;
+    z-index: 5;
+    text-decoration: none;
+    color: #c9c3c3;
+}
+#topbar a:visited{
+    color: #c9c3c3;
+    text-decoration: none;
+}
+#emptyBar{
+    background-color: black;
+    height: 50px;
+    width: 100%;
+    float: left;
+}
+
+.fixedWidth{
+    width: 1050px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 5;
+    background-color: #f4f2f2;
+}
+
+.break{
+    clear: both;
+}
+
+#downBar{
+    background-color: #565454;
+    width: 100%;
+    height: 80px;
+    color: #c9c3c3;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-weight: bold;
+    font-size: 2em;
+    margin: 0;
+    padding: 0;
+
+}
+#downBarP{
+    padding: 40px 0px 0px 0px;
+    margin: 0;
+    float: left;
+}
+#downBar img{
+    float: left;
+    margin-right: 100px;
+}
+
+#content{
+    z-index: 5;
+}
+#content div{
+    padding: 7px;
+}
+#content a{
+    color: #605a5a;
+    text-decoration: none;
+    font-size: 2em;
+    background-image: url("http://217.199.187.200/antilamer.com/images/koza.png");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 40px;
+    padding-left: 45px;
+}
+#content a:hover{
+    color: #3f3d3d;
+    font-size: 2.2em;
+}
+
+#firstImg{
+    float: right;
+    width: 500px;
+}
+
+#secondImg{
+    float: left;
+    width: 500px;
+    padding-right: 15px;
+}
+
+#bigFour{
+    width: 250px;
+    float: left;
+    position: relative;
+    left: 140px;
+    background-color: #d3d1d1;
+    border-radius: 40px;
+}
+#bigFour ul{
+    list-style: none;
+    position: relative;
+    left: -7px;
+}
+#bigFour h1{
+    position: relative;
+    left: 20px;
+}
+#bigFour a{
+    color: #605a5a;
+    text-decoration: none;
+    font-size: 2em;
+    background-image: url("images/list.png");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 40px;
+    padding-left: 45px;
+}
+#bigFour a:hover{
+    color: #3f3d3d;
+}
+
+.bb{
+    border-bottom: 1px solid #f4f2f2;
+}
+
+#video1{
+
+    position: relative;
+    top:52px;
+    float: right;
+}
+#video2{
+    margin-top: 50px;
+    float: left;
+}
+
+#more{
+    float: left;
+    position: relative;
+    background-color: #d3d1d1;
+    border-radius: 40px;
+    margin-top: 40px;
+}
+#more p{
+    position: relative;
+    left: -25px
+}
+#more a{
+    background-image: none;
+}
+#more a:hover{
+    color: black;
+    text-decoration: underline;
+    font-size: 2em;
+}
+
+#moreW{
+    font-size: 2em;
+    padding-left: 150px
+}
+
+#signature{
+    float: right;
+    margin: 0;
+}
