@@ -1,6 +1,7 @@
 package com.antilamer.config;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -26,5 +27,54 @@ import java.util.Properties;
 @PropertySource({"classpath:application.properties"})
 @ComponentScan("com.antilamer")
 public class JPAConfig {
+
+    @Value("${ordersWs.jpa.persistenceUnitName}")
+    private String persistenceUnitName = "ordersPortalDataPu";
+
+    @Resource
+    Environment env;
+
+    @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(env.getProperty("spring.datasource.driverClassName"));
+        dataSource.setUrl(env.getProperty("spring.datasource.url"));
+        dataSource.setUsername(env.getProperty("spring.datasource.username"));
+        dataSource.setPassword(env.getProperty("spring.datasource.password"));
+        return dataSource;
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+//        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+//        emf.setDataSource(dataSource());
+//        emf.setJpaVendorAdapter(jpaVendorAdapter());
+//        emf.setPackagesToScan(env.getProperty("db.entitymanager.packages.to.scan"));
+//        emf.setJpaProperties(getHibernateProperties());
+//        return emf;
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setDataSource(dataSource());
+        factoryBean.setPersistenceUnitName(persistenceUnitName);
+        factoryBean.setPackagesToScan(new String[]{"com.antilamer"});
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setShowSql(false);
+        vendorAdapter.setGenerateDdl(false);
+        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQL82Dialect");
+        factoryBean.setJpaVendorAdapter(vendorAdapter);
+        return factoryBean;
+    }
+
+    @Bean
+    public JpaVendorAdapter jpaVendorAdapter() {
+        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+        jpaVendorAdapter.setDatabase(Database.POSTGRESQL);
+        jpaVendorAdapter.setGenerateDdl(true);
+        return jpaVendorAdapter;
+    }
+
+    @Bean
+    public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
+        return new JpaTransactionManager(emf);
+    }
 
 }

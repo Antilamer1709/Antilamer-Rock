@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="PostgreSQL - postgres@localhost" uuid="107407b5-9139-45fe-a519-367ebab67804">
+    <data-source source="LOCAL" name="PostgreSQL - antilamerdb@localhost" uuid="442b6bfa-aa87-4eb4-aac9-d73910a4c154">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/antilamerdb</jdbc-url>
     </data-source>
   </component>
 </project>
