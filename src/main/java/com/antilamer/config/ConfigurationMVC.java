@@ -7,9 +7,6 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-/**
- * Created by antilamer on 06.09.16.
- */
 
 @Configuration
 public class ConfigurationMVC extends WebMvcConfigurerAdapter {
