@@ -22,7 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<jackson.version>1.9.13</jackson.version>
+		<!--<jackson.version>1.9.13</jackson.version>-->
 		<Log4j.version>1.2.17</Log4j.version>
 	</properties>
 
@@ -73,16 +73,28 @@
 		</dependency>
 
 		<!--Jackson-->
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.codehaus.jackson</groupId>-->
+			<!--<artifactId>jackson-mapper-asl</artifactId>-->
+			<!--<version>${jackson.version}</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.codehaus.jackson</groupId>-->
+			<!--<artifactId>jackson-core-asl</artifactId>-->
+			<!--<version>${jackson.version}</version>-->
+		<!--</dependency>-->
+		<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
-			<version>${jackson.version}</version>
+			<version>1.9.13</version>
 		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+
 
 		<!--DBconnector-->
 		<dependency>

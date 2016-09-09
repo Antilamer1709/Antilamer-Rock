@@ -5,7 +5,7 @@ angular.module('mvcApp').controller('BandCtrl', ['$scope', '$rootScope', '$route
 
     $scope.loadBand = function () {
         var params = {};
-        params.bandId = $routeParams.bandId;
+        params.id = $routeParams.bandId;
         BandService.getBand(params, function (res) {
                     if (res != undefined) {
                         $scope.band = res;
