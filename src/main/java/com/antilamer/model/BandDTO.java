@@ -14,8 +14,32 @@ public class BandDTO implements Serializable {
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "CONTENT")
-    private String content;
+    @Column(name = "ORIGINAL_ARTICLE")
+    private String originalArticle;
+
+    @Column(name = "IMAGE")
+    private String image;
+
+    @Column(name = "FIRST_PARAGRAPH")
+    private String firstParagraph;
+
+    @Column(name = "SECOND_PARAGRAPH")
+    private String secondParagraph;
+
+    @Column(name = "THIRD_PARAGRAPH")
+    private String thirdParagraph;
+
+    @Column(name = "FIRST_VIDEO")
+    private String firstVideo;
+
+    @Column(name = "SECOND_VIDEO")
+    private String secondVideo;
+
+    @Column(name = "THIRD_VIDEO")
+    private String thirdVideo;
+
+    @Column(name = "FOURTH_VIDEO")
+    private String fourthVideo;
 
     public BandDTO() {
     }
@@ -36,11 +60,75 @@ public class BandDTO implements Serializable {
         this.name = name;
     }
 
-    public String getContent() {
-        return content;
+    public String getOriginalArticle() {
+        return originalArticle;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setOriginalArticle(String originalArticle) {
+        this.originalArticle = originalArticle;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getFirstParagraph() {
+        return firstParagraph;
+    }
+
+    public void setFirstParagraph(String firstParagraph) {
+        this.firstParagraph = firstParagraph;
+    }
+
+    public String getSecondParagraph() {
+        return secondParagraph;
+    }
+
+    public void setSecondParagraph(String secondParagraph) {
+        this.secondParagraph = secondParagraph;
+    }
+
+    public String getThirdParagraph() {
+        return thirdParagraph;
+    }
+
+    public void setThirdParagraph(String thirdParagraph) {
+        this.thirdParagraph = thirdParagraph;
+    }
+
+    public String getFirstVideo() {
+        return firstVideo;
+    }
+
+    public void setFirstVideo(String firstVideo) {
+        this.firstVideo = firstVideo;
+    }
+
+    public String getSecondVideo() {
+        return secondVideo;
+    }
+
+    public void setSecondVideo(String secondVideo) {
+        this.secondVideo = secondVideo;
+    }
+
+    public String getThirdVideo() {
+        return thirdVideo;
+    }
+
+    public void setThirdVideo(String thirdVideo) {
+        this.thirdVideo = thirdVideo;
+    }
+
+    public String getFourthVideo() {
+        return fourthVideo;
+    }
+
+    public void setFourthVideo(String fourthVideo) {
+        this.fourthVideo = fourthVideo;
     }
 }

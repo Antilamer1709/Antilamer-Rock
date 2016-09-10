@@ -1,4 +1,26 @@
 <div>
-    {{bandId}}
-    {{band.content}}
+    <h1>{{band.name}}</h1>
+    <hr>
+    <img id="image1" src="{{band.image}}" width=350 class="floatright">
+    <p><strong>{{band.name}}</strong> {{band.firstParagraph}}</p>
+    <p>{{band.secondParagraph}}</p>
+    <p>{{band.thirdParagraph}}</p>
+
+    <br>
+
+    <div id="videos">
+        <div youtube id="video1" width="420" height="315" code="band.firstVideo"></div>
+        <div youtube id="video2" width="420" height="315" code="band.secondVideo"></div>
+        <div youtube id="video3" width="420" height="315" code="band.thirdVideo"></div>
+        <div youtube id="video4" width="420" height="315" code="band.fourthVideo"></div>
+    </div>
+
+
+    <div class="break"></div>
+
+    <br><hr>
+
+    <a href="#top">Move to top</a>
+    <br>
+    <a href="{{band.originalArticle}}" target=_blank>Original article</a>
 </div>
