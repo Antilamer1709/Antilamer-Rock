@@ -60,6 +60,7 @@ h1{
     font-weight: bold;
     font-size: 2em;
     margin: 0;
+    margin-top: 51px;
     padding: 0;
 
 }
@@ -219,5 +220,24 @@ h1{
 }
 
 #videos{
+}
 
+#image1{
+    float: right;
+    margin: 10px 0px 5px 20px;
+}
+
+/* General sizing */
+ul.dropdown-lr {
+    width: 300px;
+}
+
+/* mobile fix */
+@media (max-width: 768px) {
+    .dropdown-lr h3 {
+        color: #eee;
+    }
+    .dropdown-lr label {
+        color: #eee;
+    }
 }
