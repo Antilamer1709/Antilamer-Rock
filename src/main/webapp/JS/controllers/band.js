@@ -8,13 +8,13 @@ angular.module('mvcApp').controller('BandCtrl', ['$scope', '$rootScope', '$route
         var params = {};
         params.id = $routeParams.bandId;
         BandService.getBand(params, function (res) {
-                    if (res != undefined) {
-                        $scope.band = res;
-                    }
-                }, function (err) {
-                    $rootScope.error = err;
+                if (res != undefined) {
+                    $scope.band = res;
                 }
-            );
+            }, function (err) {
+                $rootScope.error = err;
+            }
+        );
     };
     $scope.loadBand();
 

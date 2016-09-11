@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service(value = "bandBO")
 public class BandBOIml implements BandBO {
 
-    private static Logger logger = Logger.getLogger(BandController.class);
+    private static Logger logger = Logger.getLogger(BandBOIml.class);
 
     @Autowired
     private BandDAO bandDAO;
