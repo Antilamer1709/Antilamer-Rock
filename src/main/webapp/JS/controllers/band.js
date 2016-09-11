@@ -2,7 +2,8 @@ angular.module('mvcApp').controller('BandCtrl', ['$scope', '$rootScope', '$route
 
     $scope.bandId = $routeParams.bandId;
     $scope.band;
-    $scope.code = 'oHg5SJYRHA0';
+    $rootScope.home = false;
+    $rootScope.bands = true;
 
     $scope.loadBand = function () {
         var params = {};

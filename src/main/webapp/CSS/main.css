@@ -241,3 +241,20 @@ ul.dropdown-lr {
         color: #eee;
     }
 }
+
+.bands{
+    margin-left: 20px;
+    font-size: 1.9em;
+    font-family: Impact, Charcoal, sans-serif;
+}
+.bands a{
+    color: #3f3d3d;
+    text-decoration: none;
+}
+.bands a:visited{
+    color: #3f3d3d;
+    text-decoration: none;
+}
+.bands a:hover{
+    color: #3f3d3d;
+}
