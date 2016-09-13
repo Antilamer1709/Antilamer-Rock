@@ -6,7 +6,6 @@ angular.module('mvcApp')
             replace: true,
             template: '<div style="height:315px;"><iframe style="overflow:hidden;height:315px;width:420px" width="420px" height="315px" src="{{url}}" frameborder="0" allowfullscreen></iframe></div>',
             link: function (scope) {
-                console.log('here');
                 scope.$watch('code', function (newVal) {
                     if (newVal) {
                         scope.url = $sce.trustAsResourceUrl("http://www.youtube.com/embed/" + newVal);
