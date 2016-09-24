@@ -14,4 +14,11 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
         })
     };
 
+    $scope.submitLogin = function () {
+        UserService.login($scope.login, function (res) {
+        }, function (err) {
+            $rootScope.error = err;
+        })
+    };
+
 }]);

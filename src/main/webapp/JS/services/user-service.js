@@ -6,6 +6,13 @@ angular.module('mvcApp').factory('UserService', ['$http', '$rootScope', function
             }).error(function (err) {
                 error(err);
             });
+        },
+        login: function (params, success, error) {
+            $http.post('user/login', params).success(function (res) {
+                success(res);
+            }).error(function (err) {
+                error(err);
+            });
         }
     }
 }]);

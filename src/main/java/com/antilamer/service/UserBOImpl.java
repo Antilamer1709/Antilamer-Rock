@@ -1,14 +1,20 @@
 package com.antilamer.service;
 
+import com.antilamer.beans.UserLoginBean;
 import com.antilamer.beans.UserRegistrationBean;
+import com.antilamer.config.WebSecurityConfig;
 import com.antilamer.dao.UserDAO;
 import com.antilamer.exeptions.ValidationExeption;
 import com.antilamer.model.UserDTO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Service(value = "userBO")
@@ -19,6 +25,9 @@ public class UserBOImpl implements UserBO{
     @Autowired
     private UserDAO userDAO;
 
+    @Autowired
+    private WebSecurityConfig webSecurityConfig;
+
     @Override
     @Transactional
     public void registerUser(UserRegistrationBean userRegistrationBean) throws ValidationExeption {
@@ -28,6 +37,18 @@ public class UserBOImpl implements UserBO{
         initUserDTO(userDTO, userRegistrationBean);
         userDAO.persist(userDTO);
         logger.info("*** registerUser() end");
+    }
+
+    @Override
+    @Transactional
+    public void login(UserLoginBean loginBean, HttpServletRequest req) throws Exception {
+        logger.info("*** login() start");
+        UserDTO userDTO = userDAO.getByUsername(loginBean.getUsername());
+        if (userDTO == null || !userDTO.getPassword().equals(loginBean.getPassword())){
+            throw new ValidationExeption("Username or password is incorrect!");
+        }
+        webSecurityConfig.login(req, loginBean.getUsername(), loginBean.getPassword());
+        logger.info("*** login() end");
     }
 
     private void validateUserRegistration(UserRegistrationBean bean){
