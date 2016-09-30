@@ -39,7 +39,7 @@ public class UserController {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
     public void login(@RequestBody UserLoginBean loginBean, HttpServletRequest req) throws Exception {
-        logger.info("*** loginBean()");
+        logger.info("*** login, username: " + loginBean.getUsername());
         if (loginBean != null ) {
             userBO.login(loginBean, req);
             return;

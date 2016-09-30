@@ -8,13 +8,17 @@ import com.antilamer.exeptions.ValidationExeption;
 import com.antilamer.model.UserDTO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 @Service(value = "userBO")
@@ -47,7 +51,17 @@ public class UserBOImpl implements UserBO{
         if (userDTO == null || !userDTO.getPassword().equals(loginBean.getPassword())){
             throw new ValidationExeption("Username or password is incorrect!");
         }
-        webSecurityConfig.login(req, loginBean.getUsername(), loginBean.getPassword());
+//        webSecurityConfig.login(req, loginBean.getUsername(), loginBean.getPassword());
+        AuthenticationManager manager = webSecurityConfig.getSome();
+        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(loginBean.getUsername(), loginBean.getPassword());
+        // Authenticate the user
+        Authentication authentication = manager.authenticate(authRequest);
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(authentication);
+
+        // Create a new session and add the security context.
+        HttpSession session = req.getSession(true);
+        session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
         logger.info("*** login() end");
     }
 
