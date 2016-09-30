@@ -2,17 +2,21 @@ package com.antilamer.service;
 
 import com.antilamer.beans.UserLoginBean;
 import com.antilamer.beans.UserRegistrationBean;
-import com.antilamer.config.WebSecurityConfig;
+import com.antilamer.config.security.WebSecurityConfig;
 import com.antilamer.dao.UserDAO;
 import com.antilamer.exeptions.ValidationExeption;
 import com.antilamer.model.UserDTO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -26,7 +30,8 @@ public class UserBOImpl implements UserBO{
     private UserDAO userDAO;
 
     @Autowired
-    private WebSecurityConfig webSecurityConfig;
+    AuthenticationManager authenticationManager;
+
 
     @Override
     @Transactional
@@ -41,14 +46,24 @@ public class UserBOImpl implements UserBO{
 
     @Override
     @Transactional
-    public void login(UserLoginBean loginBean, HttpServletRequest req) throws Exception {
+    public ResponseEntity<?> login(UserLoginBean loginBean, HttpServletRequest req) throws Exception {
         logger.info("*** login() start");
         UserDTO userDTO = userDAO.getByUsername(loginBean.getUsername());
         if (userDTO == null || !userDTO.getPassword().equals(loginBean.getPassword())){
             throw new ValidationExeption("Username or password is incorrect!");
         }
-        webSecurityConfig.login(req, loginBean.getUsername(), loginBean.getPassword());
-        logger.info("*** login() end");
+        try {
+            Authentication token = new UsernamePasswordAuthenticationToken(loginBean.getUsername(), loginBean.getPassword());
+            Authentication auth = authenticationManager.authenticate(token);
+
+            SecurityContextHolder.getContext().setAuthentication(auth);
+
+            logger.info("*** login() end");
+            return new ResponseEntity<>(token, HttpStatus.OK);
+        }
+        catch (Exception ex) {
+            return new ResponseEntity<>(String.format("{\"error\": \"%s\"}", ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     private void validateUserRegistration(UserRegistrationBean bean){
