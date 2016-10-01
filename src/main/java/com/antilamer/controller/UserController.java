@@ -1,5 +1,6 @@
 package com.antilamer.controller;
 
+import com.antilamer.beans.LoggedUserBean;
 import com.antilamer.beans.UserLoginBean;
 import com.antilamer.beans.UserRegistrationBean;
 import com.antilamer.exeptions.ServerExeption;
@@ -11,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,7 +28,7 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     public void saveAdvertisement(@RequestBody UserRegistrationBean registrationBean) throws ValidationExeption {
         logger.info("*** registerUser()");
-        if (registrationBean != null ) {
+        if (registrationBean != null) {
             userBO.registerUser(registrationBean);
             return;
         }
@@ -40,9 +38,17 @@ public class UserController {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody UserLoginBean loginBean, HttpServletRequest req) throws Exception {
         logger.info("*** loginBean()");
-        if (loginBean != null ) {
+        if (loginBean != null) {
             return userBO.login(loginBean, req);
         }
         throw new ServerExeption("Server internal error, please contact to developer");
+    }
+
+    @RequestMapping(value = "currentUser", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    LoggedUserBean login(HttpServletRequest req) throws Exception {
+        logger.info("*** currentUser()");
+        return userBO.currentUser();
     }
 }

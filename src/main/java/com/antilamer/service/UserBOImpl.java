@@ -1,5 +1,6 @@
 package com.antilamer.service;
 
+import com.antilamer.beans.LoggedUserBean;
 import com.antilamer.beans.UserLoginBean;
 import com.antilamer.beans.UserRegistrationBean;
 import com.antilamer.config.security.WebSecurityConfig;
@@ -64,6 +65,15 @@ public class UserBOImpl implements UserBO{
         catch (Exception ex) {
             return new ResponseEntity<>(String.format("{\"error\": \"%s\"}", ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @Override
+    public LoggedUserBean currentUser() {
+        logger.info("*** currentUser() start");
+        LoggedUserBean userBean = new LoggedUserBean();
+        userBean.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        logger.info("*** currentUser() end for " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        return userBean;
     }
 
     private void validateUserRegistration(UserRegistrationBean bean){
