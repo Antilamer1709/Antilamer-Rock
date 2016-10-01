@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/user")
@@ -50,5 +51,11 @@ public class UserController {
     LoggedUserBean login(HttpServletRequest req) throws Exception {
         logger.info("*** currentUser()");
         return userBO.currentUser();
+    }
+
+    @RequestMapping(value="logout", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        logger.info("*** logout()");
+        return userBO.logout(request, response);
     }
 }

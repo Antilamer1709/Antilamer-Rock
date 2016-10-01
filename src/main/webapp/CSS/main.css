@@ -258,3 +258,8 @@ ul.dropdown-lr {
 .bands a:hover{
     color: #3f3d3d;
 }
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
