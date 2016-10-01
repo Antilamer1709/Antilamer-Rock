@@ -1,11 +1,14 @@
 package com.antilamer.beans;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import java.io.Serializable;
+import java.util.Collection;
 
 public class LoggedUserBean implements Serializable {
     Long id;
     String username;
-    String role;
+    Collection<? extends GrantedAuthority> roles;
     Boolean logged;
 
     public Long getId() {
@@ -24,12 +27,12 @@ public class LoggedUserBean implements Serializable {
         this.username = username;
     }
 
-    public String getRole() {
-        return role;
+    public Collection<? extends GrantedAuthority> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(Collection<? extends GrantedAuthority> role) {
+        this.roles = role;
     }
 
     public Boolean getLogged() {

@@ -7,10 +7,12 @@ import com.antilamer.config.security.WebSecurityConfig;
 import com.antilamer.dao.UserDAO;
 import com.antilamer.exeptions.ValidationExeption;
 import com.antilamer.model.UserDTO;
+import com.antilamer.utils.Constants;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import java.util.Date;
 
 @Service(value = "userBO")
@@ -72,6 +75,8 @@ public class UserBOImpl implements UserBO{
         logger.info("*** currentUser() start");
         LoggedUserBean userBean = new LoggedUserBean();
         userBean.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        userBean.setLogged(!checkAnonymous(SecurityContextHolder.getContext().getAuthentication().getAuthorities()));
+        userBean.setRoles(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         logger.info("*** currentUser() end for " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return userBean;
     }
@@ -100,6 +105,15 @@ public class UserBOImpl implements UserBO{
         userDTO.setEmail(bean.getEmail());
         userDTO.setPassword(bean.getPassword());
         userDTO.setRegistrationDate(new Date());
+    }
+
+    private boolean checkAnonymous(Collection<? extends GrantedAuthority> authorities){
+        for (GrantedAuthority role : authorities) {
+            if (role.getAuthority().equals(Constants.ROLE_ANONYMOUS)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

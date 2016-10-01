@@ -6,6 +6,9 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
     $rootScope.home = true;
     $rootScope.bands = false;
     $scope.active = "active";
+    $scope.user = {};
+    $scope.user.username = "";
+    $scope.user.logged = false;
     // $rootScope.user = UserService.getLoggedUser();
     // $rootScope.user = UserService.getLoggedUser();
 
@@ -26,6 +29,8 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
     $scope.getLoggerUser = function () {
         UserService.getLoggedUser(function (res) {
             $rootScope.user = res;
+            $scope.user.username = res.username;
+            $scope.user.logged = res.logged;
         }, function (err) {
             // $rootScope.user = err;
             $rootScope.error = err;
@@ -46,4 +51,5 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
     // }
 
     console.log($rootScope.user);
+    // console.log($scope.user.logged);
 }]);
