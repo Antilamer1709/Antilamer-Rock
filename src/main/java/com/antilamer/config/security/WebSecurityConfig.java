@@ -46,34 +46,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
-//
-//        http.authorizeRequests().antMatchers("/user/login", "/user/registerUser").permitAll();
-    }
-
-    public void login(HttpServletRequest request, String userName, String password) throws Exception {
-        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userName, password);
-        // Authenticate the user
-        Authentication authentication = authenticationManager().authenticate(authRequest);
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        securityContext.setAuthentication(authentication);
-
-        // Create a new session and add the security context.
-        HttpSession session = request.getSession(true);
-        session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
-
-
-
-//        try {
-//            // Must be called from request filtered by Spring Security, otherwise SecurityContextHolder is not updated
-//            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-//            token.setDetails(new WebAuthenticationDetails(request));
-//            Authentication authentication = this.authenticationProvider.authenticate(token);
-//            logger.debug("Logging in with [{}]", authentication.getPrincipal());
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//        } catch (Exception e) {
-//            SecurityContextHolder.getContext().setAuthentication(null);
-//            logger.error("Failure in autoLogin", e);
-//        }
     }
 
 }

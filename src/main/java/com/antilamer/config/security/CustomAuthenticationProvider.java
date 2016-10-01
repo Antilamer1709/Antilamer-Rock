@@ -29,14 +29,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-        if(authentication.getName().equals("admin")  && authentication.getCredentials().equals("admin")) {
+//        if(authentication.getName().equals("admin")  && authentication.getCredentials().equals("admin")) {
             List<GrantedAuthority> grantedAuths = new ArrayList<>();
             grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+//            grantedAuths.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(), grantedAuths);
-        } else {
-            return null;
-        }
+//        } else {
+//            return null;
+//        }
 
     }
 
