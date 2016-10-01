@@ -4,6 +4,11 @@ angular.module('mvcApp').factory('BandService', ['$http', '$rootScope', function
             return $http.post('getBand', params).success(function (res) {
                 success(res);
             }).error(error);
+        },
+        saveBand: function (params, success, error) {
+            return $http.post('saveBand', params).success(function (res) {
+                success(res);
+            }).error(error);
         }
     }
 }]);

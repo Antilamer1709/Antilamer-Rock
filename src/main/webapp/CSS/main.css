@@ -84,11 +84,11 @@ h1{
     color: #605a5a;
     text-decoration: none;
     font-size: 2em;
-    background-image: url("http://217.199.187.200/antilamer.com/images/koza.png");
-    background-repeat: no-repeat;
-    background-position: left center;
-    background-size: 40px;
-    padding-left: 45px;
+    /*background-image: url("http://217.199.187.200/antilamer.com/images/koza.png");*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: left center;*/
+    /*background-size: 40px;*/
+    /*padding-left: 45px;*/
 }
 #content a:hover{
     color: #3f3d3d;

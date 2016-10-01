@@ -1,0 +1,65 @@
+<div>
+
+    <h1>{{band.name}}</h1>
+
+    <div>
+        <div class="row">
+            <div class="form-group">
+                <label>Band name:</label>
+                <input class="form-control" ng-model="band.name"/>
+            </div>
+            <div class="form-group">
+                <label>Link to article:</label>
+                <input class="form-control" ng-model="band.originalArticle"/>
+            </div>
+            <div class="form-group">
+                <label>Link to image:</label>
+                <input class="form-control" ng-model="band.image"/>
+            </div>
+            <div class="form-group">
+                <label>Videos, http://www.youtube.com/embed/:</label>
+                <input class="form-control" ng-model="band.firstVideo"/>
+                <input class="form-control" ng-model="band.secondVideo"/>
+                <input class="form-control" ng-model="band.thirdVideo"/>
+                <input class="form-control" ng-model="band.fourthVideo"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <label>First paragraph:</label>
+                <textarea ck-editor ng-model="band.firstParagraph" class="form-control input-sm" rows="5">
+                </textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <label>Second paragraph:</label>
+                <textarea ck-editor ng-model="band.secondParagraph" class="form-control input-sm" rows="5">
+                </textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <label>Third paragraph:</label>
+                <textarea ck-editor ng-model="band.thirdParagraph" class="form-control input-sm" rows="5">
+                </textarea>
+            </div>
+        </div>
+
+    </div>
+
+
+    <button style="float: right; margin-left: 10px"
+            ng-click="saveBand()"
+            class="btn btn-success">
+        SAVE
+    </button>
+
+    <button style="float: right; margin-left: 10px"
+            ng-click="canlcelEditing()"
+            class="btn btn-danger">
+        CANCEL EDIT
+    </button>
+
+</div>

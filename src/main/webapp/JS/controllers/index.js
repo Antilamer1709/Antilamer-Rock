@@ -24,9 +24,6 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
         })
         $window.location.href = $location.$$path;
     };
-    // $scope.reload = function () {
-    //     $window.location.href = $location.$$path;
-    // }
 
     $scope.getLoggerUser = function () {
         UserService.getLoggedUser(function (res) {

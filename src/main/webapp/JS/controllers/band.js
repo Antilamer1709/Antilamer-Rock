@@ -5,6 +5,8 @@ angular.module('mvcApp').controller('BandCtrl', ['$scope', '$rootScope', '$route
     $rootScope.home = false;
     $rootScope.bands = true;
 
+    $scope.editLink = "#/band/edit/" + $scope.bandId;
+
     $scope.loadBand = function () {
         var params = {};
         params.id = $routeParams.bandId;

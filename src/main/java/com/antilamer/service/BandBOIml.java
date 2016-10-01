@@ -62,4 +62,43 @@ public class BandBOIml implements BandBO {
         logger.info("getBand end for id: " + id);
         return bean;
     }
+
+    @Override
+    @Transactional
+    public void saveBand(BandBean bean) {
+        logger.info("saveBand start for id: " + bean.getId());
+        BandDTO bandDTO = bandDAO.findById(bean.getId());
+        if (bean.getName() != null){
+            bandDTO.setName(bean.getName());
+        }
+        if (bean.getImage() != null){
+            bandDTO.setImage(bean.getImage());
+        }
+        if (bean.getOriginalArticle() != null){
+            bandDTO.setOriginalArticle(bean.getOriginalArticle());
+        }
+        if (bean.getFirstParagraph() != null){
+            bandDTO.setFirstParagraph(bean.getFirstParagraph());
+        }
+        if (bean.getSecondParagraph() != null){
+            bandDTO.setSecondParagraph(bean.getSecondParagraph());
+        }
+        if (bean.getThirdParagraph() != null){
+            bandDTO.setThirdParagraph(bean.getThirdParagraph());
+        }
+        if (bean.getFirstVideo() != null){
+            bandDTO.setFirstVideo(bean.getFirstVideo());
+        }
+        if (bean.getSecondVideo() != null){
+            bandDTO.setSecondVideo(bean.getSecondVideo());
+        }
+        if (bean.getThirdVideo() != null){
+            bandDTO.setThirdVideo(bean.getThirdVideo());
+        }
+        if (bean.getFourthVideo() != null){
+            bandDTO.setFourthVideo(bean.getFourthVideo());
+        }
+        bandDAO.persist(bandDTO);
+        logger.info("saveBand end for id: " + bean.getId());
+    }
 }

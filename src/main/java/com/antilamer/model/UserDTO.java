@@ -3,6 +3,7 @@ package com.antilamer.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import org.hibernate.annotations.Index;
 
 @Entity
 @Table(name = "USERS")
@@ -24,6 +25,11 @@ public class UserDTO implements Serializable {
 
     @Column(name = "REGISTRATION_DATE")
     private Date registrationDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ROLE_ID")
+    @Index(name = "U_CLIENT_ID_IDX")
+    private RoleDTO role;
 
     public UserDTO() {
     }
@@ -66,5 +72,13 @@ public class UserDTO implements Serializable {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public RoleDTO getRole() {
+        return role;
+    }
+
+    public void setRole(RoleDTO role) {
+        this.role = role;
     }
 }
