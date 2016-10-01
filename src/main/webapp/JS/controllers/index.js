@@ -1,7 +1,7 @@
 /**
  * Created by antilamer on 2016.08.04..
  */
-angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserService', '$location', function ($scope, $rootScope, UserService, $location) {
+angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserService', '$route', '$location', '$window', function ($scope, $rootScope, UserService, $route, $location, $window) {
 
     $rootScope.home = true;
     $rootScope.bands = false;
@@ -9,8 +9,6 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
     $scope.user = {};
     $scope.user.username = "";
     $scope.user.logged = false;
-    // $rootScope.user = UserService.getLoggedUser();
-    // $rootScope.user = UserService.getLoggedUser();
 
     $scope.submitRegistration = function () {
         UserService.registration($scope.registration, function (res) {
@@ -24,7 +22,11 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
         }, function (err) {
             $rootScope.error = err;
         })
+        $window.location.href = $location.$$path;
     };
+    // $scope.reload = function () {
+    //     $window.location.href = $location.$$path;
+    // }
 
     $scope.getLoggerUser = function () {
         UserService.getLoggedUser(function (res) {
@@ -32,24 +34,9 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
             $scope.user.username = res.username;
             $scope.user.logged = res.logged;
         }, function (err) {
-            // $rootScope.user = err;
             $rootScope.error = err;
         })
     }
 
     $scope.getLoggerUser();
-
-    // function getLoggedUser() {
-    //     var ie = "ie";
-    //     $http.post(serviceUrl + 'users/currentUser', ie).success(function (user) {
-    //         user.logged = true;
-    //         changeUser(user);
-    //     }).error(function () {
-    //         changeUser({login: '', logged: false});
-    //     });
-    //
-    // }
-
-    console.log($rootScope.user);
-    // console.log($scope.user.logged);
 }]);
