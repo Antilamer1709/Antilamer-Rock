@@ -3,7 +3,6 @@ package com.antilamer.service;
 import com.antilamer.beans.LoggedUserBean;
 import com.antilamer.beans.UserLoginBean;
 import com.antilamer.beans.UserRegistrationBean;
-import com.antilamer.config.security.WebSecurityConfig;
 import com.antilamer.dao.UserDAO;
 import com.antilamer.exeptions.ValidationExeption;
 import com.antilamer.model.UserDTO;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
