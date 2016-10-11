@@ -6,10 +6,10 @@ import java.io.Serializable;
 import java.util.Collection;
 
 public class LoggedUserBean implements Serializable {
-    Long id;
-    String username;
-    Collection<? extends GrantedAuthority> roles;
-    Boolean logged;
+    private Long id;
+    private String username;
+    private String role;
+    private Boolean logged;
 
     public Long getId() {
         return id;
@@ -27,12 +27,12 @@ public class LoggedUserBean implements Serializable {
         this.username = username;
     }
 
-    public Collection<? extends GrantedAuthority> getRoles() {
-        return roles;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoles(Collection<? extends GrantedAuthority> role) {
-        this.roles = role;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Boolean getLogged() {

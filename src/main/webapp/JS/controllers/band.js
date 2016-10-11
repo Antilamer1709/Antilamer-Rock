@@ -1,9 +1,13 @@
-angular.module('mvcApp').controller('BandCtrl', ['$scope', '$rootScope', '$routeParams', 'BandService', function ($scope, $rootScope, $routeParams, BandService) {
+angular.module('mvcApp').controller('BandCtrl', ['$scope', '$rootScope', '$routeParams', 'BandService', 'ROLES', function ($scope, $rootScope, $routeParams, BandService, ROLES) {
 
     $scope.bandId = $routeParams.bandId;
     $scope.band;
     $rootScope.home = false;
     $rootScope.bands = true;
+    $scope.isAdmin = false;
+    if($rootScope.user.role == ROLES.ADMIN || $rootScope.user.role == ROLES.SUPER_ADMIN){
+        $scope.isAdmin = true;
+    }
 
     $scope.editLink = "#/band/edit/" + $scope.bandId;
 

@@ -76,8 +76,9 @@ public class UserBOImpl implements UserBO{
         LoggedUserBean userBean = new LoggedUserBean();
         userBean.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
         userBean.setLogged(!checkAnonymous(SecurityContextHolder.getContext().getAuthentication().getAuthorities()));
-        userBean.setRoles(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+        userBean.setRole(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0].toString());
         logger.info("*** currentUser() end for " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        logger.info(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         return userBean;
     }
 

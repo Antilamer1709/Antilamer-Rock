@@ -32,9 +32,9 @@ public class BandController {
     }
 
     @RequestMapping(value = "saveBand", method = RequestMethod.POST)
-//    @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
+    @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void saveMetrics(@RequestBody BandBean bean){
+    public void saveBand(@RequestBody BandBean bean){
         logger.info("*** saveBand()");
         if (bean != null) {
             bandBO.saveBand(bean);

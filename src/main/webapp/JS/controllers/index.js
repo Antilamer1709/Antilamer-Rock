@@ -1,7 +1,7 @@
 /**
  * Created by antilamer on 2016.08.04..
  */
-angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserService', '$route', '$location', '$window', function ($scope, $rootScope, UserService, $route, $location, $window) {
+angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserService', '$route', '$location', '$window', 'ROLES', function ($scope, $rootScope, UserService, $route, $location, $window, ROLES) {
 
     $rootScope.home = true;
     $rootScope.bands = false;
@@ -9,6 +9,7 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
     $scope.user = {};
     $scope.user.username = "";
     $scope.user.logged = false;
+    console.log($scope.user);
 
     $scope.submitRegistration = function () {
         UserService.registration($scope.registration, function (res) {
@@ -30,6 +31,7 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
             $rootScope.user = res;
             $scope.user.username = res.username;
             $scope.user.logged = res.logged;
+            $rootScope.user.role = res.role;
         }, function (err) {
             $rootScope.error = err;
         })
