@@ -14,19 +14,7 @@ angular.module('mvcApp').factory('UserService', ['$http', '$rootScope', function
             }).error(function (err) {
                 error(err);
             });
-        }
-        // ,
-        // getLoggedUser: function getLoggedUser() {
-        //     $http.post('user/currentUser').success(function (user) {
-        //         // user.logged = true;
-        //         success(user);
-        //     }).error(function (err) {
-        //         // user.logged = false;
-        //         error(err)
-        //     });
-        //
-        // }
-        ,
+        },
         getLoggedUser: function (success, error) {
             $http.post('user/currentUser').success(function (res) {
                 success(res);
