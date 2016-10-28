@@ -1,6 +1,6 @@
 angular.module('mvcApp')
     .constant('ROLES', {
-        ADMIN: "ADMIN",
-        USER: "USER",
-        SUPER_ADMIN: "SUPER_ADMIN",
+        ADMIN: "ROLE_ADMIN",
+        USER: "ROLE_USER",
+        SUPER_ADMIN: "ROLE_SUPER_ADMIN",
     });

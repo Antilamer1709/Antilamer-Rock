@@ -37,7 +37,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         List<GrantedAuthority> grantedAuths = new ArrayList<>();
         UserDTO userDTO = userDAO.getByUsername(authentication.getPrincipal().toString());
-        grantedAuths.add(new SimpleGrantedAuthority(userDTO.getRole().getRole()));
+        grantedAuths.add(new SimpleGrantedAuthority(Constants.ROLE_PREFIX + userDTO.getRole().getRole()));
         return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(), grantedAuths);
     }
 

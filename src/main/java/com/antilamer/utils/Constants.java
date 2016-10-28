@@ -7,4 +7,6 @@ public class Constants {
     };
 
     public static final String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
+
+    public static final String ROLE_PREFIX = "ROLE_";
 }
