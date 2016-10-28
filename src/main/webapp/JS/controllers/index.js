@@ -11,12 +11,7 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
     $scope.user.logged = false;
 
 
-    ngToast.settings.horizontalPosition = 'center'
-    // ngToast.configure({
-    //     verticalPosition: 'bottom',
-    //     horizontalPosition: 'center',
-    //     maxNumber: 3
-    // });
+    ngToast.settings.horizontalPosition = 'center';
 
     $scope.submitRegistration = function () {
         UserService.registration($scope.registration, function (res) {
@@ -25,15 +20,14 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
             $rootScope.error = err;
         })
     };
-
+    // ngToast.create({
+    //     className: 'danger',
+    //     horizontalPosition: 'left',
+    //     content: '<a href="#" class="">error</a>'
+    // });
     $scope.submitLogin = function () {
         UserService.login($scope.login, function (res) {
             $scope.getLoggerUser();
-            ngToast.create({
-                className: 'success',
-                horizontalPosition: 'left',
-                content: '<a href="#" class="">new</a>'
-            });
         }, function (err) {
             $rootScope.error = err;
         })
