@@ -3,8 +3,10 @@ package com.antilamer.service;
 import com.antilamer.beans.LoggedUserBean;
 import com.antilamer.beans.UserLoginBean;
 import com.antilamer.beans.UserRegistrationBean;
+import com.antilamer.dao.RoleDAO;
 import com.antilamer.dao.UserDAO;
 import com.antilamer.exeptions.ValidationExeption;
+import com.antilamer.model.RoleDTO;
 import com.antilamer.model.UserDTO;
 import com.antilamer.utils.Constants;
 import org.apache.log4j.Logger;
@@ -36,6 +38,8 @@ public class UserBOImpl implements UserBO{
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    private RoleDAO roleDAO;
 
     @Override
     @Transactional
@@ -59,10 +63,9 @@ public class UserBOImpl implements UserBO{
         try {
             Authentication token = new UsernamePasswordAuthenticationToken(loginBean.getUsername(), loginBean.getPassword());
             Authentication auth = authenticationManager.authenticate(token);
-
             SecurityContextHolder.getContext().setAuthentication(auth);
-
-            logger.info("*** login() end");
+            logger.info("*** login() end for: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            logger.info(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
             return new ResponseEntity<>(token, HttpStatus.OK);
         }
         catch (Exception ex) {
@@ -115,6 +118,8 @@ public class UserBOImpl implements UserBO{
         userDTO.setEmail(bean.getEmail());
         userDTO.setPassword(bean.getPassword());
         userDTO.setRegistrationDate(new Date());
+        RoleDTO role = roleDAO.findById(1l);//Now user can get only USER role with id 1
+        userDTO.setRole(role);
     }
 
     private boolean checkAnonymous(Collection<? extends GrantedAuthority> authorities){

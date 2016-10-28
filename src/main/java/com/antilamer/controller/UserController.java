@@ -26,7 +26,7 @@ public class UserController {
 
     @RequestMapping(value = "registerUser", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
-    public void saveAdvertisement(@RequestBody UserRegistrationBean registrationBean) throws ValidationExeption {
+    public void registerUser(@RequestBody UserRegistrationBean registrationBean) throws ValidationExeption {
         logger.info("*** registerUser()");
         if (registrationBean != null) {
             userBO.registerUser(registrationBean);
