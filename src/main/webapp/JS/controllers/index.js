@@ -1,7 +1,7 @@
 /**
  * Created by antilamer on 2016.08.04..
  */
-angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserService', '$route', '$location', '$window', 'ROLES', 'ngToast', function ($scope, $rootScope, UserService, $route, $location, $window, ROLES, ngToast) {
+angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserService', '$route', '$location', '$window', 'ROLES', 'ngToast', 'CommonService', function ($scope, $rootScope, UserService, $route, $location, $window, ROLES, ngToast, CommonService) {
 
     $rootScope.home = true;
     $rootScope.bands = false;
@@ -15,16 +15,12 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
 
     $scope.submitRegistration = function () {
         UserService.registration($scope.registration, function (res) {
+            CommonService.showToast('success', 'Registration success');
             $scope.getLoggerUser();
         }, function (err) {
             $rootScope.error = err;
         })
     };
-    // ngToast.create({
-    //     className: 'danger',
-    //     horizontalPosition: 'left',
-    //     content: '<a href="#" class="">error</a>'
-    // });
     $scope.submitLogin = function () {
         UserService.login($scope.login, function (res) {
             $scope.getLoggerUser();
