@@ -6,6 +6,8 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
     $scope.band;
     $scope.returnLink = "#/band/" + $scope.bandId;
 
+    CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+
     $scope.loadBand = function () {
         var params = {};
         params.id = $routeParams.bandId;
