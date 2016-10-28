@@ -11,10 +11,13 @@ import com.antilamer.model.UserDTO;
 import com.antilamer.utils.Constants;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +44,9 @@ public class UserBOImpl implements UserBO{
     @Autowired
     private RoleDAO roleDAO;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     @Transactional
     public void registerUser(UserRegistrationBean userRegistrationBean) throws ValidationExeption {
@@ -57,20 +63,20 @@ public class UserBOImpl implements UserBO{
     public ResponseEntity<?> login(UserLoginBean loginBean, HttpServletRequest req) throws Exception {
         logger.info("*** login() start");
         UserDTO userDTO = userDAO.getByUsername(loginBean.getUsername());
-        if (userDTO == null || !userDTO.getPassword().equals(loginBean.getPassword())){
-            throw new ValidationExeption("Username or password is incorrect!");
+        if (userDTO != null || passwordEncoder.matches(loginBean.getPassword(), userDTO.getPassword())) {
+            try {
+                Authentication token = new UsernamePasswordAuthenticationToken(loginBean.getUsername(),
+                        passwordEncoder.encode(loginBean.getPassword()));
+                Authentication auth = authenticationManager.authenticate(token);
+                SecurityContextHolder.getContext().setAuthentication(auth);
+                logger.info("*** login() end for: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+                logger.info(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+                return new ResponseEntity<>(token, HttpStatus.OK);
+            } catch (Exception ex) {
+                return new ResponseEntity<>(String.format("{\"error\": \"%s\"}", ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
-        try {
-            Authentication token = new UsernamePasswordAuthenticationToken(loginBean.getUsername(), loginBean.getPassword());
-            Authentication auth = authenticationManager.authenticate(token);
-            SecurityContextHolder.getContext().setAuthentication(auth);
-            logger.info("*** login() end for: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-            logger.info(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
-            return new ResponseEntity<>(token, HttpStatus.OK);
-        }
-        catch (Exception ex) {
-            return new ResponseEntity<>(String.format("{\"error\": \"%s\"}", ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        throw new ValidationExeption("Username or password is incorrect!");
     }
 
     @Override
@@ -116,7 +122,7 @@ public class UserBOImpl implements UserBO{
     private void initUserDTO(UserDTO userDTO, UserRegistrationBean bean){
         userDTO.setUsername(bean.getUsername());
         userDTO.setEmail(bean.getEmail());
-        userDTO.setPassword(bean.getPassword());
+        userDTO.setPassword(passwordEncoder.encode(bean.getPassword()));
         userDTO.setRegistrationDate(new Date());
         RoleDTO role = roleDAO.findById(1l);//Now user can get only USER role with id 1
         userDTO.setRole(role);

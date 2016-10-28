@@ -20,10 +20,10 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
 
     $scope.submitLogin = function () {
         UserService.login($scope.login, function (res) {
+            $scope.getLoggerUser();
         }, function (err) {
             $rootScope.error = err;
         })
-        $window.location.href = $location.$$path;
     };
 
     $scope.getLoggerUser = function () {
