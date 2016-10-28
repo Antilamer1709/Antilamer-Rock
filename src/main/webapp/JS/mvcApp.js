@@ -1,4 +1,9 @@
-angular.module('mvcApp', ['ngRoute', 'ngAnimate', 'route-segment', 'view-segment'])
+angular.module('mvcApp', [
+    'ngRoute',
+    'ngAnimate',
+    'route-segment',
+    'view-segment',
+    'ngToast'])
     .config(['$routeSegmentProvider', '$routeProvider', function ($routeSegmentProvider, $routeProvider) {
         $routeSegmentProvider
             .when('/', 'index')

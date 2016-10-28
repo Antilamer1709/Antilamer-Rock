@@ -1,7 +1,7 @@
 /**
  * Created by antilamer on 2016.08.04..
  */
-angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserService', '$route', '$location', '$window', 'ROLES', function ($scope, $rootScope, UserService, $route, $location, $window, ROLES) {
+angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserService', '$route', '$location', '$window', 'ROLES', 'ngToast', function ($scope, $rootScope, UserService, $route, $location, $window, ROLES, ngToast) {
 
     $rootScope.home = true;
     $rootScope.bands = false;
@@ -9,10 +9,18 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
     $scope.user = {};
     $scope.user.username = "";
     $scope.user.logged = false;
-    console.log($scope.user);
+
+
+    ngToast.settings.horizontalPosition = 'center'
+    // ngToast.configure({
+    //     verticalPosition: 'bottom',
+    //     horizontalPosition: 'center',
+    //     maxNumber: 3
+    // });
 
     $scope.submitRegistration = function () {
         UserService.registration($scope.registration, function (res) {
+            $scope.getLoggerUser();
         }, function (err) {
             $rootScope.error = err;
         })
@@ -21,6 +29,11 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
     $scope.submitLogin = function () {
         UserService.login($scope.login, function (res) {
             $scope.getLoggerUser();
+            ngToast.create({
+                className: 'success',
+                horizontalPosition: 'left',
+                content: '<a href="#" class="">new</a>'
+            });
         }, function (err) {
             $rootScope.error = err;
         })
@@ -36,6 +49,5 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
             $rootScope.error = err;
         })
     }
-
     $scope.getLoggerUser();
 }]);

@@ -10,9 +10,12 @@
   "private": true,
 
   "dependencies": {
+    "angular-animate": "~1.5.8",
+    "angular-sanitize": "~1.5.8",
     "ckeditor": "4",
     "bootstrap": "~3.3.5",
     "jquery": "~2.1.4",
-    "angular-bootstrap": "~0.13.3"
+    "angular-bootstrap": "~0.13.3",
+    "ngtoast": "2.0.0"
   }
 }
