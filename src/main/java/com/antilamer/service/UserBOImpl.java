@@ -11,12 +11,10 @@ import com.antilamer.model.UserDTO;
 import com.antilamer.utils.Constants;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
@@ -113,6 +111,9 @@ public class UserBOImpl implements UserBO{
             if (userDTO != null && userDTO.getEmail() != null){
                 throw new ValidationExeption("User with this email is already exist!");
             }
+        }
+        if (bean.getEmail() == null){
+            throw new ValidationExeption("Please, enter correct email!");
         }
         if (!bean.getPassword().equals(bean.getConfirmPassword())){
             throw new ValidationExeption("Passwords are not matching!");
