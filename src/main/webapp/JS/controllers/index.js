@@ -1,6 +1,3 @@
-/**
- * Created by antilamer on 2016.08.04..
- */
 angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserService', '$route', '$location', '$window', 'ROLES', 'ngToast', 'CommonService', function ($scope, $rootScope, UserService, $route, $location, $window, ROLES, ngToast, CommonService) {
 
     $rootScope.home = true;
