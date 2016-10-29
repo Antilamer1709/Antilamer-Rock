@@ -32,6 +32,7 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
             $scope.user.username = res.username;
             $scope.user.logged = res.logged;
             $rootScope.user.role = res.role;
+            $scope.isAdmin = $rootScope.user.role == ROLES.ADMIN || $rootScope.user.role == ROLES.SUPER_ADMIN;
         }, function (err) {
             $rootScope.error = err;
         })
