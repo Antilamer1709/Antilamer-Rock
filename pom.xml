@@ -23,6 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<Log4j.version>1.2.17</Log4j.version>
+		<!--<start-class>com.antilamer.SpringWebAppApplication</start-class>-->
 	</properties>
 
 	<dependencies>
