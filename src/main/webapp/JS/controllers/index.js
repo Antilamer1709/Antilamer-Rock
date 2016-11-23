@@ -6,6 +6,8 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
     $scope.user = {};
     $scope.user.username = "";
     $scope.user.logged = false;
+    $scope.login = {};
+    $scope.password = "";
 
 
     ngToast.settings.horizontalPosition = 'center';
@@ -13,13 +15,16 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
     $scope.submitRegistration = function () {
         UserService.registration($scope.registration, function (res) {
             CommonService.showToast('success', 'Registration success');
-            $scope.getLoggerUser();
+            $scope.login.username = $scope.registration.username;
+            $scope.login.password = $scope.registration.password;
+            $scope.submitLogin();
         }, function (err) {
             $rootScope.error = err;
         })
     };
     $scope.submitLogin = function () {
         UserService.login($scope.login, function (res) {
+            CommonService.showToast('success', 'You are logged');
             $scope.getLoggerUser();
         }, function (err) {
             $rootScope.error = err;
