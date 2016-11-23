@@ -27,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.headers().disable();
         http
                 .authorizeRequests()
                 .antMatchers(Constants.RESOURCES_PERMISSION_ALL).permitAll()
@@ -34,7 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/user/login/")
-//                .loginPage("/**")
                 .permitAll()
                 .and()
                 .logout()
