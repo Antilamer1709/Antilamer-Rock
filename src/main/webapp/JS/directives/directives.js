@@ -14,7 +14,7 @@ angular.module('mvcApp')
             }
         };
     })
-    .directive('ckEditor', function () {  //TODO poprawić bo to jest dziwne rozwiązanie
+    .directive('ckEditor', function () {
         return {
             require: '?ngModel',
             scope: {
@@ -28,13 +28,12 @@ angular.module('mvcApp')
                         ngModel.$setViewValue(ck.getData());
                     });
                 }
-
                 ck.on('change', updateModel);
                 ck.on('key', updateModel);
                 ck.on('dataReady', updateModel);
 
                 scope.$watch('refreshData', function (oldValue, newValue) {
-                    if (newValue) {
+                    if(newValue) {
                         ck.setData(newValue);
                     }
                 });
@@ -42,5 +41,6 @@ angular.module('mvcApp')
             }
         };
     });
+
 
 

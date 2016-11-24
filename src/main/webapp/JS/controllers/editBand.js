@@ -3,7 +3,8 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
     $scope.bandId = $routeParams.bandId;
     $rootScope.home = false;
     $rootScope.bands = true;
-    $scope.band;
+    $scope.band = {};
+    $scope.band.bandContent = "";
     $scope.returnLink = "#/band/" + $scope.bandId;
 
     CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
@@ -15,6 +16,8 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
         BandService.getBand(params, function (res) {
                 if (res != undefined) {
                     $scope.band = res;
+                    console.log( CKEDITOR.instances);
+                    CKEDITOR.instances['contentEditor'].setData($scope.band.bandContent);
                 }
             }, function (err) {
                 $rootScope.error = err;

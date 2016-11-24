@@ -16,11 +16,11 @@
                 <input class="form-control" ng-model="band.fourthVideo"/>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <label>Content:</label>
-                <textarea ck-editor ng-model="band.bandContent" class="form-control input-sm" rows="5">
+                <textarea id="contentEditor" ck-editor ng-model="band.bandContent" refresh-data="band.bandContent"
+                          class="form-control input-sm" rows="15">
                 </textarea>
             </div>
         </div>
