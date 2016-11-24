@@ -8,6 +8,7 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
     $scope.returnLink = "#/band/" + $scope.bandId;
 
     CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+    CKEDITOR.config.entities = false;
     CKEDITOR.config.height = "500";
 
     $scope.loadBand = function () {
@@ -16,7 +17,6 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
         BandService.getBand(params, function (res) {
                 if (res != undefined) {
                     $scope.band = res;
-                    console.log( CKEDITOR.instances);
                     CKEDITOR.instances['contentEditor'].setData($scope.band.bandContent);
                 }
             }, function (err) {
@@ -29,6 +29,7 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
     $scope.saveBand = function () {
         $scope.band.id = $routeParams.bandId;
         BandService.saveBand($scope.band, function (res) {
+            $scope.band.bandContent = CKEDITOR.instances['contentEditor'].getData();
             $window.location.href = $scope.returnLink;
         }, function (err) {
             $rootScope.error = err;
