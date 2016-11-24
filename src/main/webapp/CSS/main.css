@@ -263,3 +263,6 @@ ul.dropdown-lr {
     margin-left: auto;
     margin-right: auto;
 }
+.bandImage{
+    float: right;
+}

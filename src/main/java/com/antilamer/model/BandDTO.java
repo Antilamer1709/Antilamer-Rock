@@ -11,23 +11,14 @@ public class BandDTO implements Serializable {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NAME")
-    private String name;
+    @Column(name = "BAND_CONTENT")
+    private String bandContent;
 
     @Column(name = "ORIGINAL_ARTICLE")
     private String originalArticle;
 
     @Column(name = "IMAGE")
     private String image;
-
-    @Column(name = "FIRST_PARAGRAPH")
-    private String firstParagraph;
-
-    @Column(name = "SECOND_PARAGRAPH")
-    private String secondParagraph;
-
-    @Column(name = "THIRD_PARAGRAPH")
-    private String thirdParagraph;
 
     @Column(name = "FIRST_VIDEO")
     private String firstVideo;
@@ -52,14 +43,6 @@ public class BandDTO implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getOriginalArticle() {
         return originalArticle;
     }
@@ -74,30 +57,6 @@ public class BandDTO implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public String getFirstParagraph() {
-        return firstParagraph;
-    }
-
-    public void setFirstParagraph(String firstParagraph) {
-        this.firstParagraph = firstParagraph;
-    }
-
-    public String getSecondParagraph() {
-        return secondParagraph;
-    }
-
-    public void setSecondParagraph(String secondParagraph) {
-        this.secondParagraph = secondParagraph;
-    }
-
-    public String getThirdParagraph() {
-        return thirdParagraph;
-    }
-
-    public void setThirdParagraph(String thirdParagraph) {
-        this.thirdParagraph = thirdParagraph;
     }
 
     public String getFirstVideo() {
@@ -130,5 +89,13 @@ public class BandDTO implements Serializable {
 
     public void setFourthVideo(String fourthVideo) {
         this.fourthVideo = fourthVideo;
+    }
+
+    public String getBandContent() {
+        return bandContent;
+    }
+
+    public void setBandContent(String bandContent) {
+        this.bandContent = bandContent;
     }
 }

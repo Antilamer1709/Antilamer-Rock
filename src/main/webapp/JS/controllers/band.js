@@ -14,6 +14,7 @@ angular.module('mvcApp').controller('BandCtrl', ['$scope', '$rootScope', '$route
         BandService.getBand(params, function (res) {
                 if (res != undefined) {
                     $scope.band = res;
+                    document.getElementById("bandContent").innerHTML = $scope.band.bandContent;
                 }
             }, function (err) {
                 $rootScope.error = err;

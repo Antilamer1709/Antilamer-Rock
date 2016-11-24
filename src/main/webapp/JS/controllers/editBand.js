@@ -7,6 +7,7 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
     $scope.returnLink = "#/band/" + $scope.bandId;
 
     CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+    CKEDITOR.config.height = "500";
 
     $scope.loadBand = function () {
         var params = {};

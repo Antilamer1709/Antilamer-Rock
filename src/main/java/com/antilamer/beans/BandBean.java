@@ -5,11 +5,9 @@ import java.io.Serializable;
 public class BandBean implements Serializable {
     private Long id;
     private String name;
+    private String bandContent;
     private String originalArticle;
     private String image;
-    private String firstParagraph;
-    private String secondParagraph;
-    private String thirdParagraph;
     private String firstVideo;
     private String secondVideo;
     private String thirdVideo;
@@ -47,30 +45,6 @@ public class BandBean implements Serializable {
         this.image = image;
     }
 
-    public String getFirstParagraph() {
-        return firstParagraph;
-    }
-
-    public void setFirstParagraph(String firstParagraph) {
-        this.firstParagraph = firstParagraph;
-    }
-
-    public String getSecondParagraph() {
-        return secondParagraph;
-    }
-
-    public void setSecondParagraph(String secondParagraph) {
-        this.secondParagraph = secondParagraph;
-    }
-
-    public String getThirdParagraph() {
-        return thirdParagraph;
-    }
-
-    public void setThirdParagraph(String thirdParagraph) {
-        this.thirdParagraph = thirdParagraph;
-    }
-
     public String getFirstVideo() {
         return firstVideo;
     }
@@ -101,5 +75,13 @@ public class BandBean implements Serializable {
 
     public void setFourthVideo(String fourthVideo) {
         this.fourthVideo = fourthVideo;
+    }
+
+    public String getBandContent() {
+        return bandContent;
+    }
+
+    public void setBandContent(String bandContent) {
+        this.bandContent = bandContent;
     }
 }
