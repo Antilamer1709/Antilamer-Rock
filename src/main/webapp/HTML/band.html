@@ -1,4 +1,8 @@
 <div>
+    <a ng-show="isAdmin" href="{{editLink}}"
+       class="btn btn-default" style="float: right; margin-left: 10px">
+        Edit
+    </a>
 
     <div id="bandContent"></div>
 
@@ -17,11 +21,5 @@
     <br><hr>
 
     <a href="{{band.originalArticle}}" target=_blank>Original article</a>
-
-    <a ng-show="isAdmin" href="{{editLink}}"
-       class="btn btn-default" style="float: right; margin-left: 10px">
-        EDIT
-    </a>
-
 
 </div>
