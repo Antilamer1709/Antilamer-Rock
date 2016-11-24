@@ -5,24 +5,34 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
     $rootScope.bands = true;
     $scope.band = {};
     $scope.band.bandContent = "";
+    $scope.saveContent = "";
     $scope.returnLink = "#/band/" + $scope.bandId;
 
     CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
     CKEDITOR.config.entities = false;
     CKEDITOR.config.height = "500";
 
+    var count = 0; //TODO fix it
     $scope.loadBand = function () {
-        var params = {};
-        params.id = $routeParams.bandId;
-        BandService.getBand(params, function (res) {
-                if (res != undefined) {
-                    $scope.band = res;
-                    CKEDITOR.instances['contentEditor'].setData($scope.band.bandContent);
+        if (count < 2){
+            count++;
+            var params = {};
+            params.id = $routeParams.bandId;
+            BandService.getBand(params, function (res) {
+                    if (res != undefined) {
+                        $scope.loadBand();
+                        $scope.band = res;
+                        $scope.saveContent = $scope.band.bandContent;
+                        CKEDITOR.instances['contentEditor'].setData($scope.band.bandContent);
+                    }
+                }, function (err) {
+                    $rootScope.error = err;
                 }
-            }, function (err) {
-                $rootScope.error = err;
-            }
-        );
+            );
+        } else {
+            $scope.band.bandContent = $scope.saveContent;
+        }
+
     };
     $scope.loadBand();
 
