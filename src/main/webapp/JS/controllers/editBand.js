@@ -10,7 +10,7 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
 
     CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
     CKEDITOR.config.entities = false;
-    CKEDITOR.config.height = "500";
+    CKEDITOR.config.height = "600";
 
     var count = 0; //TODO fix it
     $scope.loadBand = function () {
