@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service(value = "bandBO")
-public class BandBOIml implements BandBO {
+public class BandBOImpl implements BandBO {
 
-    private static Logger logger = Logger.getLogger(BandBOIml.class);
+    private static Logger logger = Logger.getLogger(BandBOImpl.class);
 
     @Autowired
     private BandDAO bandDAO;
