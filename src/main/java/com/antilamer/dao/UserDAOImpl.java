@@ -16,7 +16,7 @@ public class UserDAOImpl extends AbstractJpaDAOImpl<UserDTO> implements UserDAO{
         String sql =
                 "select a"
                         + " from UserDTO a"
-                        + " where a.username = :username";
+                        + " where lower(a.username) = :username";
 
         Query query = entityManager.createQuery(sql);
         query.setParameter("username", username);

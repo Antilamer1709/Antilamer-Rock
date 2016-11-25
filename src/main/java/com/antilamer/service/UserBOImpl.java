@@ -60,10 +60,10 @@ public class UserBOImpl implements UserBO{
     @Transactional
     public ResponseEntity<?> login(UserLoginBean loginBean, HttpServletRequest req) throws Exception {
         logger.info("*** login() start");
-        UserDTO userDTO = userDAO.getByUsername(loginBean.getUsername());
+        UserDTO userDTO = userDAO.getByUsername(loginBean.getUsername().toLowerCase());
         if (userDTO != null && passwordEncoder.matches(loginBean.getPassword(), userDTO.getPassword())) {
             try {
-                Authentication token = new UsernamePasswordAuthenticationToken(loginBean.getUsername(),
+                Authentication token = new UsernamePasswordAuthenticationToken(userDTO.getUsername(),
                         passwordEncoder.encode(loginBean.getPassword()));
                 Authentication auth = authenticationManager.authenticate(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
