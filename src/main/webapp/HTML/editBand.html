@@ -1,13 +1,14 @@
-<div>
+<div style="padding: 7px">
 
     <h1>{{band.name}}</h1>
 
-    <div>
-        <div class="row">
+    <div style="padding: 7px">
+        <div class="row" style="padding: 21px">
             <div class="form-group">
                 <label>Link to article:</label>
                 <input class="form-control" ng-model="band.originalArticle"/>
             </div>
+
             <div class="form-group">
                 <label>Videos, http://www.youtube.com/embed/:</label>
                 <input class="form-control" ng-model="band.firstVideo"/>
@@ -16,7 +17,22 @@
                 <input class="form-control" ng-model="band.fourthVideo"/>
             </div>
         </div>
-        <div class="row">
+        <div class="form-group" style="padding: 7px">
+            <label>You can upload image or insert url</label>
+            <br>
+            <label>Upload image <span><toggle-switch
+                    style="padding: initial !important;"
+                    ng-model="switchStatus">
+            </toggle-switch></span></label>
+
+            <input ng-if="!switchStatus" class="form-control" ng-model="band.image"/>
+            <br>
+            <button ng-if="switchStatus" class="btn btn-xs btn-primary btn-lg" style="margin-right: 10px;" ngf-select="uploadImage($file, pattern.code)"
+                    ngf-max-size="{{maxFileSize}}" ngf-pattern="application/pdf,image/*">
+                Upload
+            </button>
+        </div>
+        <div class="row" style="padding: 7px">
             <div class="col-md-12 col-lg-12">
                 <label>Content:</label>
                 <textarea id="contentEditor" ck-editor ng-model="band.bandContent"

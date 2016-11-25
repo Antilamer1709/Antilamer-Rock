@@ -1,4 +1,4 @@
-angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$routeParams', 'BandService', '$window', function ($scope, $rootScope, $routeParams, BandService, $window) {
+angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$routeParams', 'BandService', '$window', 'CommonService', function ($scope, $rootScope, $routeParams, BandService, $window, CommonService) {
 
     $scope.bandId = $routeParams.bandId;
     $rootScope.home = false;
@@ -6,6 +6,7 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
     $scope.band = {};
     $scope.band.bandContent = "";
     $scope.saveContent = "";
+    $scope.switchStatus = true;
     $scope.returnLink = "#/band/" + $scope.bandId;
 
     CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
@@ -48,6 +49,24 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
 
     $scope.canlcelEditing = function () {
         $window.location.href = $scope.returnLink;
+    };
+
+    $scope.uploadImage = function uploadImage(file, type) {
+        if (file != null) {
+            // if (file.$error != undefined) {
+            //     if (file.$error == 'maxSize') {
+            //         CommonService.showTranslatedNotifyWindow($translate.instant('file.size.error') + '<br />' + file.$errorParam, 'alert alert-danger', '3000', '/ordersPortal/mvcOrdersViews?path=widget/notification-template&lang=' + lang + '&ver=' + timestampUrl);
+            //     } else {
+            //         CommonService.showTranslatedNotifyWindow($translate.instant('file.format.error') + '<br />', 'alert alert-danger', '3000', '/ordersPortal/mvcOrdersViews?path=widget/notification-template&lang=' + lang + '&ver=' + timestampUrl);
+            //     }
+            //     return;
+            // }
+            BandService.uploadImage(file, $scope.band.id, function (res) {
+                CommonService.showToast('success', 'File uploaded!');
+            }, function (err) {
+                $rootScope.error = err;
+            });
+        }
     };
 
 }]);

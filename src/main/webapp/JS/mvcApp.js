@@ -3,7 +3,9 @@ angular.module('mvcApp', [
     'ngAnimate',
     'route-segment',
     'view-segment',
-    'ngToast'])
+    'ngToast',
+    'ngFileUpload',
+    'toggle-switch'])
     .config(['$routeSegmentProvider', '$routeProvider', function ($routeSegmentProvider, $routeProvider) {
         $routeSegmentProvider
             .when('/', 'index')

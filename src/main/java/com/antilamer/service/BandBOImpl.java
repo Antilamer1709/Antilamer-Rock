@@ -33,6 +33,9 @@ public class BandBOImpl implements BandBO {
             if (bandDTO.getImage() != null){
                 bean.setImage(bandDTO.getImage());
             }
+            if (bandDTO.getName() != null){
+                bean.setName(bandDTO.getName());
+            }
             if (bandDTO.getOriginalArticle() != null){
                 bean.setOriginalArticle(bandDTO.getOriginalArticle());
             }

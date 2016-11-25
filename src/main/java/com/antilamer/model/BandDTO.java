@@ -11,6 +11,9 @@ public class BandDTO implements Serializable {
     @Column(name = "ID")
     private Long id;
 
+    @Column(name = "NAME")
+    private String name;
+
     @Column(name = "BAND_CONTENT")
     private String bandContent;
 
@@ -31,6 +34,9 @@ public class BandDTO implements Serializable {
 
     @Column(name = "FOURTH_VIDEO")
     private String fourthVideo;
+
+    @Column(name = "UPLOADED_IMAGE")
+    private Boolean uploadedImage;
 
     public BandDTO() {
     }
@@ -97,5 +103,21 @@ public class BandDTO implements Serializable {
 
     public void setBandContent(String bandContent) {
         this.bandContent = bandContent;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Boolean getUploadedImage() {
+        return uploadedImage;
+    }
+
+    public void setUploadedImage(Boolean uploadedImage) {
+        this.uploadedImage = uploadedImage;
     }
 }
