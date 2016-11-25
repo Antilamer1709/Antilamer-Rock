@@ -14,7 +14,7 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
 
     var count = 0; //TODO fix it
     $scope.loadBand = function () {
-        if (count < 2){
+        if (count < 1){
             count++;
             var params = {};
             params.id = $routeParams.bandId;
