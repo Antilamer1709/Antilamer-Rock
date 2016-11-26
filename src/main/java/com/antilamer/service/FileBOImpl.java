@@ -1,21 +1,21 @@
 package com.antilamer.service;
 
-import com.antilamer.controller.FileController;
 import com.antilamer.dao.BandDAO;
 import com.antilamer.exeptions.ValidationExeption;
 import com.antilamer.model.BandDTO;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+
+import java.io.*;
 
 @Service(value = "fileBOImpl")
 public class FileBOImpl implements FileBO {
@@ -34,8 +34,8 @@ public class FileBOImpl implements FileBO {
     public ResponseEntity<?> uploadImage(MultipartFile file, Long bandId) {
         logger.info("*** uploadImage() for bandId:" + bandId);
         try {
-            validateAndPersistBand(bandId);
-            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(imagesDirectory + bandId)));
+            BufferedOutputStream stream =
+                    new BufferedOutputStream(new FileOutputStream(new File(imagesDirectory + bandId)));
             stream.write(file.getBytes());
             stream.close();
             logger.info("*** uploadImage() end for bandId:" + bandId);
@@ -48,14 +48,16 @@ public class FileBOImpl implements FileBO {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private void validateAndPersistBand(Long bandId){
-        BandDTO bandDTO = bandDAO.findById(bandId);
-        if (bandDTO != null) {
-            bandDTO.setUploadedImage(true);
-            bandDAO.persist(bandDTO);
-        } else {
-            throw new ValidationExeption("Band with this id doesn't exist! bandId:" + bandId);
-        }
+    @Override
+    public ResponseEntity<byte[]> getBandImage(String bandId) throws IOException {
+        File file = new File(imagesDirectory + bandId);
+        InputStream in = new FileInputStream(file);
+        final HttpHeaders headers = new HttpHeaders();
+        Long fileLength = file.length();
+        headers.set("Content-Type", "image/jpeg");
+        headers.set("Content-Length", fileLength.toString());
+        return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.PARTIAL_CONTENT);
+
     }
 
 }

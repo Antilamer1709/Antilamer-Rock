@@ -23,6 +23,9 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
                     if (res != undefined) {
                         $scope.loadBand();
                         $scope.band = res;
+                        if($scope.band.uploadedImage){
+                            $scope.band.image = "";
+                        }
                         $scope.saveContent = $scope.band.bandContent;
                         CKEDITOR.instances['contentEditor'].setData($scope.band.bandContent);
                     }
@@ -39,6 +42,7 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
 
     $scope.saveBand = function () {
         $scope.band.id = $routeParams.bandId;
+        $scope.band.uploadedImage = $scope.switchStatus;
         BandService.saveBand($scope.band, function (res) {
             $scope.band.bandContent = CKEDITOR.instances['contentEditor'].getData();
             $window.location.href = $scope.returnLink;
