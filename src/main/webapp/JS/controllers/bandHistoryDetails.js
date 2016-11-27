@@ -1,4 +1,4 @@
-angular.module('mvcApp').controller('BandHistoryDetails', ['$scope', '$rootScope', '$routeParams', 'BandService', 'ROLES', function ($scope, $rootScope, $routeParams, BandService, ROLES) {
+angular.module('mvcApp').controller('BandHistoryDetails', ['$scope', '$rootScope', '$routeParams', 'BandService', '$window', 'CommonService', function ($scope, $rootScope, $routeParams, BandService, $window, CommonService) {
 
     $scope.bandId = $routeParams.bandId;
     $scope.versionId = $routeParams.versionId;
@@ -31,9 +31,8 @@ angular.module('mvcApp').controller('BandHistoryDetails', ['$scope', '$rootScope
         params.id = $routeParams.bandId;
         params.versionId = $routeParams.versionId;
         BandService.makeVersionCurrent(params, function (res) {
-                if (res != undefined) {
-
-                }
+                CommonService.showToast('success', 'Current version has been changed');
+                $window.location.href = "#/band/" + $scope.bandId;
             }, function (err) {
                 $rootScope.error = err;
             }
