@@ -24,20 +24,20 @@ angular.module('mvcApp').controller('BandHistoryCtrl', ['$scope', '$rootScope', 
                 name: 'creationDate',
                 displayName: 'Date',
                 width: '*'
+            },
+            {
+                name: 'action',
+                displayName: 'Action',
+                cellTemplate: '' +
+                '<a href="#/band/history/details/{{grid.appScope.bandId}}/{{row.entity.id}}' +
+                '"class="btn btn-primary" style="padding: 1px 5px;font-size: 12px; + ' +
+                'line-height: 1.5;border-radius: 3px; color: #F4F2F2; margin: 5px" > View</a>',
+                width: 100
+                // enableSorting: false,
+                // enableFiltering: false,
+                // headerCellFilter: 'translate',
+                // enableColumnMenu: false
             }
-            // {
-            //     name: 'action',
-            //     displayName: 'commons.action',
-            //     cellTemplate: '' +
-            //     '<a href="#/configuration/{{row.entity.id}}' + liferayToken + '" ng-if="row.entity.attachmentDownloadUrl != undefined && row.entity.attachmentDownloadUrl != null" class="btn btn-primary btn-xs" target="_blank"> ' +
-            //     '<span class="glyphicon glyphicon-download-alt"></span>&nbsp;{{"commons.download" | translate}}</a><a class="btn btn-primary btn-xs" style="margin-left: 4px;" href="#/configuration/{{row.entity.id}}">' +
-            //     '<span class="glyphicon glyphicon-pencil"></span>&nbsp;{{"commons.edit" | translate}}</a>',
-            //     width: 140,
-            //     enableSorting: false,
-            //     enableFiltering: false,
-            //     headerCellFilter: 'translate',
-            //     enableColumnMenu: false
-            // }
         ]
     };
 

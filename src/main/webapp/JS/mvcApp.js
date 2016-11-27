@@ -16,6 +16,7 @@ angular.module('mvcApp', [
             .when('/band/:bandId', 'band')
             .when('/band/edit/:bandId', 'editBand')
             .when('/band/history/:bandId', 'bandHistory')
+            .when('/band/history/details/:bandId/:versionId', 'bandHistoryDetails');
 
         $routeSegmentProvider.segment('index', {
             templateUrl: 'HTML/home.html',
@@ -38,6 +39,12 @@ angular.module('mvcApp', [
             templateUrl: 'HTML/bandHistory.html',
             controller: 'BandHistoryCtrl',
             dependencies: ['bandId']
+        });
+
+        $routeSegmentProvider.segment('bandHistoryDetails', {
+            templateUrl: 'HTML/band.html',
+            controller: 'BandHistoryDetails',
+            dependencies: ['bandId', 'versionId']
         });
 
         $routeProvider.otherwise({redirectTo: '/'});

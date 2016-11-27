@@ -4,6 +4,7 @@ package com.antilamer.service;
 import com.antilamer.beans.BandBean;
 import com.antilamer.beans.BandHistoryBean;
 import com.antilamer.beans.BandSearhBean;
+import com.antilamer.beans.CommonSearchBean;
 import com.antilamer.dao.BandDAO;
 import com.antilamer.dao.BandVersionDAO;
 import com.antilamer.exeptions.ValidationExeption;
@@ -80,6 +81,47 @@ public class BandBOImpl implements BandBO {
     }
 
     @Override
+    public BandBean getBandVersion(CommonSearchBean searchBean) {
+        logger.info("getBandVersion() start for verionId: " + searchBean.getVersionId());
+        BandDTO bandDTO = bandDAO.findById(searchBean.getId());
+        BandVersionDTO bandVersionDTO = bandVersionDAO.findById(searchBean.getVersionId());
+        BandBean bean = new BandBean();
+        if (bandVersionDTO != null && bandDTO != null) {
+            if (bandVersionDTO.getId() != null) {
+                bean.setId(bandVersionDTO.getId());
+            }
+            if (bandVersionDTO.getBandContent() != null) {
+                bean.setBandContent(bandVersionDTO.getBandContent());
+            }
+            if (bandVersionDTO.getImage() != null) {
+                bean.setImage(bandVersionDTO.getImage());
+            }
+            if (bandDTO.getName() != null) {
+                bean.setName(bandDTO.getName());
+            }
+            if (bandVersionDTO.getOriginalArticle() != null) {
+                bean.setOriginalArticle(bandVersionDTO.getOriginalArticle());
+            }
+            if (bandVersionDTO.getFirstVideo() != null) {
+                bean.setFirstVideo(bandVersionDTO.getFirstVideo());
+            }
+            if (bandVersionDTO.getSecondVideo() != null) {
+                bean.setSecondVideo(bandVersionDTO.getSecondVideo());
+            }
+            if (bandVersionDTO.getThirdVideo() != null) {
+                bean.setThirdVideo(bandVersionDTO.getThirdVideo());
+            }
+            if (bandVersionDTO.getFourthVideo() != null) {
+                bean.setFourthVideo(bandVersionDTO.getFourthVideo());
+            }
+            if (bandVersionDTO.getUploadedImage() != null) {
+                bean.setUploadedImage(bandVersionDTO.getUploadedImage());
+            }
+        }
+        return bean;
+    }
+
+    @Override
     @Transactional
     public void saveBand(BandBean bean) {
         logger.info("saveBand start for id: " + bean.getId());
@@ -129,6 +171,25 @@ public class BandBOImpl implements BandBO {
             logger.info("saveBand end for id: " + bean.getId());
         } else {
             throw new ValidationExeption("Band doesn't exist with id " + bean.getId());
+        }
+    }
+
+    @Override
+    @Transactional
+    public void makeVersionCurrent(CommonSearchBean searchBean) {
+        logger.info("makeVersionCurrent start for versionId: " + searchBean.getVersionId());
+        BandDTO bandDTO = bandDAO.findById(searchBean.getId());
+        BandVersionDTO versionDTO = bandVersionDAO.findById(searchBean.getVersionId());
+        if (bandDTO != null && versionDTO != null) {
+            versionDTO.setCurrentVersion(true);
+            versionDTO.setCreationDate(new Date());
+            versionDTO.setBand(bandDTO);
+            versionDTO.setUser(userBO.getLoggedUser());
+            bandDTO.setCurrentVersion(versionDTO);
+            bandDAO.persist(bandDTO);
+            logger.info("makeVersionCurrent end for id: " + searchBean.getVersionId());
+        } else {
+            throw new ValidationExeption("Band doesn't exist with id " + searchBean.getId());
         }
     }
 

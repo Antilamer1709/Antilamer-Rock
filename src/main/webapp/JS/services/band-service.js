@@ -5,8 +5,18 @@ angular.module('mvcApp').factory('BandService', ['$http', '$rootScope', 'Upload'
                 success(res);
             }).error(error);
         },
+        getBandVersion: function (params, success, error) {
+            return $http.post('getBandVersion', params).success(function (res) {
+                success(res);
+            }).error(error);
+        },
         saveBand: function (params, success, error) {
             return $http.post('saveBand', params).success(function (res) {
+                success(res);
+            }).error(error);
+        },
+        makeVersionCurrent: function (params, success, error) {
+            return $http.post('makeVersionCurrent', params).success(function (res) {
                 success(res);
             }).error(error);
         },

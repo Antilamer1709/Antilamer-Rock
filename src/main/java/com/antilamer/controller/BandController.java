@@ -37,6 +37,18 @@ public class BandController {
         throw new ServerExeption("Server internal error, please contact to developer");
     }
 
+    @RequestMapping(value = "/getBandVersion", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
+    BandBean getBandVersion(@RequestBody CommonSearchBean searchBean) {
+        if (searchBean != null && searchBean.getId() != null) {
+            logger.info("getBandVersion() bandId: " + searchBean.getId());
+            return bandBO.getBandVersion(searchBean);
+        }
+        throw new ServerExeption("Server internal error, please contact to developer");
+    }
+
     @RequestMapping(value = "saveBand", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
     @ResponseStatus(value = HttpStatus.OK)
@@ -44,6 +56,18 @@ public class BandController {
         logger.info("*** saveBand()");
         if (bean != null) {
             bandBO.saveBand(bean);
+            return;
+        }
+        throw new ServerExeption("Server internal error, please contact to developer. Band is not saved!");
+    }
+
+    @RequestMapping(value = "makeVersionCurrent", method = RequestMethod.POST)
+    @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
+    @ResponseStatus(value = HttpStatus.OK)
+    public void makeVersionCurrent(@RequestBody CommonSearchBean searchBean){
+        if (searchBean != null) {
+            logger.info("*** makeVersionCurrent() for bandId: " + searchBean.getId());
+            bandBO.makeVersionCurrent(searchBean);
             return;
         }
         throw new ServerExeption("Server internal error, please contact to developer. Band is not saved!");

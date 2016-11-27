@@ -1,8 +1,13 @@
 <div class="padding21">
-    <a ng-show="isAdmin" href="{{editLink}}"
+    <a ng-show="isAdmin && !versionId" href="{{editLink}}"
        class="btn btn-default" style="float: right; margin-left: 10px">
         <span class="glyphicon glyphicon-pencil"></span>
         Edit
+    </a>
+    <a ng-show="isAdmin && versionId" class="btn btn-default" style="float: right; margin-left: 10px"
+        ng-click="makeVersionCurrent()">
+        <span class="glyphicon glyphicon-pencil"></span>
+        Make current
     </a>
     <a ng-show="isAdmin" href="{{historyLink}}"
        class="btn btn-default" style="float: right; margin-left: 10px">

@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 
 public class CommonSearchBean implements Serializable {
-    public Long id;
+
+    private Long id;
+    private Long versionId;
 
     public Long getId() {
         return id;
@@ -12,5 +14,13 @@ public class CommonSearchBean implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getVersionId() {
+        return versionId;
+    }
+
+    public void setVersionId(Long versionId) {
+        this.versionId = versionId;
     }
 }
