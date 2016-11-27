@@ -45,6 +45,7 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
         $scope.band.uploadedImage = $scope.switchStatus;
         BandService.saveBand($scope.band, function (res) {
             $scope.band.bandContent = CKEDITOR.instances['contentEditor'].getData();
+            CommonService.showToast('success', 'Band has been saved');
             $window.location.href = $scope.returnLink;
         }, function (err) {
             $rootScope.error = err;
