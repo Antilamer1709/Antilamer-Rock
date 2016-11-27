@@ -28,7 +28,7 @@ public class UserDTO implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ROLE_ID")
-    @Index(name = "U_CLIENT_ID_IDX")
+    @Index(name = "U_ROLE_ID_IDX")
     private RoleDTO role;
 
     public UserDTO() {
