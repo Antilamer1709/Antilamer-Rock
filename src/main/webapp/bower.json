@@ -17,6 +17,7 @@
     "jquery": "~2.1.4",
     "angular-bootstrap": "~0.13.3",
     "ngtoast": "2.0.0",
-    "angular-bootstrap-toggle-switch": "~0.5.6"
+    "angular-bootstrap-toggle-switch": "~0.5.6",
+    "angular-ui-grid": "~3.2.7"
   }
 }

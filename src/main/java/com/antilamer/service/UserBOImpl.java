@@ -90,6 +90,11 @@ public class UserBOImpl implements UserBO{
     }
 
     @Override
+    public UserDTO getLoggedUser() {
+        return userDAO.getByUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+    }
+
+    @Override
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){

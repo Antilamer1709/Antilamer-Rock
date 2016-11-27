@@ -1,0 +1,16 @@
+<div class="padding21">
+
+    <img src="{{band.image}}" width=350 >
+
+    <a ng-show="isAdmin" href="{{returnLink}}"
+       class="btn btn-default" style="float: right; margin: 15px">
+        Return
+    </a>
+
+    <h1 style="float: right">{{band.name}}</h1>
+
+    <h2>History</h2>
+
+    <div id="grid1" ui-grid="gridOptions"  ui-grid-pagination class="grid"></div>
+    
+</div>

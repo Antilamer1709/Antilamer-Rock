@@ -4,6 +4,7 @@ import com.antilamer.beans.LoggedUserBean;
 import com.antilamer.beans.UserLoginBean;
 import com.antilamer.beans.UserRegistrationBean;
 import com.antilamer.exeptions.ValidationExeption;
+import com.antilamer.model.UserDTO;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,8 @@ public interface UserBO {
     ResponseEntity<?> login(UserLoginBean loginBean, HttpServletRequest req) throws Exception;
 
     LoggedUserBean currentUser();
+
+    UserDTO getLoggedUser();
 
     String logout(HttpServletRequest request, HttpServletResponse response);
 }

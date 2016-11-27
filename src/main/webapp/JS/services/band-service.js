@@ -10,6 +10,11 @@ angular.module('mvcApp').factory('BandService', ['$http', '$rootScope', 'Upload'
                 success(res);
             }).error(error);
         },
+        seachBandHistory: function (params, success, error) {
+            return $http.post('seachBandHistory', params).success(function (res) {
+                success(res);
+            }).error(error);
+        },
         uploadImage: function (file, bandId, success, error) {
             Upload.upload({
                 url: 'uploadImage',

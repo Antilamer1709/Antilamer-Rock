@@ -7,6 +7,7 @@ angular.module('mvcApp').controller('BandCtrl', ['$scope', '$rootScope', '$route
 
 
     $scope.editLink = "#/band/edit/" + $scope.bandId;
+    $scope.historyLink = "#/band/history/" + $scope.bandId;
 
     $scope.loadBand = function () {
         var params = {};

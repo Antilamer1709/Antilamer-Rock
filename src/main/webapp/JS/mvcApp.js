@@ -5,7 +5,9 @@ angular.module('mvcApp', [
     'view-segment',
     'ngToast',
     'ngFileUpload',
-    'toggle-switch'])
+    'toggle-switch',
+    'ui.grid',
+    'ui.grid.pagination'])
     .config(['$routeSegmentProvider', '$routeProvider', function ($routeSegmentProvider, $routeProvider) {
         $routeSegmentProvider
             .when('/', 'index')
@@ -13,6 +15,7 @@ angular.module('mvcApp', [
             .when('/configuration', 'configuration')
             .when('/band/:bandId', 'band')
             .when('/band/edit/:bandId', 'editBand')
+            .when('/band/history/:bandId', 'bandHistory')
 
         $routeSegmentProvider.segment('index', {
             templateUrl: 'HTML/home.html',
@@ -28,6 +31,12 @@ angular.module('mvcApp', [
         $routeSegmentProvider.segment('editBand', {
             templateUrl: 'HTML/editBand.html',
             controller: 'EditBandCtrl',
+            dependencies: ['bandId']
+        });
+
+        $routeSegmentProvider.segment('bandHistory', {
+            templateUrl: 'HTML/bandHistory.html',
+            controller: 'BandHistoryCtrl',
             dependencies: ['bandId']
         });
 

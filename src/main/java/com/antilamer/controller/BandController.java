@@ -1,6 +1,8 @@
 package com.antilamer.controller;
 
 import com.antilamer.beans.BandBean;
+import com.antilamer.beans.BandHistoryBean;
+import com.antilamer.beans.BandSearhBean;
 import com.antilamer.beans.CommonSearchBean;
 import com.antilamer.exeptions.ServerExeption;
 import com.antilamer.service.BandBO;
@@ -10,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class BandController {
@@ -41,5 +47,17 @@ public class BandController {
             return;
         }
         throw new ServerExeption("Server internal error, please contact to developer. Band is not saved!");
+    }
+
+    @RequestMapping(value = "seachBandHistory", method = RequestMethod.POST)
+    @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
+    public
+    @ResponseBody
+    List<BandHistoryBean> seachBandHistory(HttpServletRequest req, @RequestBody BandSearhBean searchBean){
+        logger.info("*** seachBandHistory() ");
+        if (searchBean != null){
+            return bandBO.seachBandHistory(searchBean);
+        }
+        return null;
     }
 }

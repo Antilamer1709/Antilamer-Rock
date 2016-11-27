@@ -1,7 +1,11 @@
 package com.antilamer.model;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Set;
+import org.hibernate.annotations.Index;
 
 @Entity
 @Table(name = "BANDS")
@@ -14,29 +18,13 @@ public class BandDTO implements Serializable {
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "BAND_CONTENT")
-    private String bandContent;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CURRENT_VERSION_ID")
+    @Index(name = "U_CURRENT_VERSION_ID_IDX")
+    private BandVersionDTO currentVersion;
 
-    @Column(name = "ORIGINAL_ARTICLE")
-    private String originalArticle;
-
-    @Column(name = "IMAGE")
-    private String image;
-
-    @Column(name = "FIRST_VIDEO")
-    private String firstVideo;
-
-    @Column(name = "SECOND_VIDEO")
-    private String secondVideo;
-
-    @Column(name = "THIRD_VIDEO")
-    private String thirdVideo;
-
-    @Column(name = "FOURTH_VIDEO")
-    private String fourthVideo;
-
-    @Column(name = "UPLOADED_IMAGE")
-    private Boolean uploadedImage;
+    @OneToMany (mappedBy = "band")
+    private Set<BandVersionDTO> versions;
 
     public BandDTO() {
     }
@@ -49,62 +37,6 @@ public class BandDTO implements Serializable {
         this.id = id;
     }
 
-    public String getOriginalArticle() {
-        return originalArticle;
-    }
-
-    public void setOriginalArticle(String originalArticle) {
-        this.originalArticle = originalArticle;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getFirstVideo() {
-        return firstVideo;
-    }
-
-    public void setFirstVideo(String firstVideo) {
-        this.firstVideo = firstVideo;
-    }
-
-    public String getSecondVideo() {
-        return secondVideo;
-    }
-
-    public void setSecondVideo(String secondVideo) {
-        this.secondVideo = secondVideo;
-    }
-
-    public String getThirdVideo() {
-        return thirdVideo;
-    }
-
-    public void setThirdVideo(String thirdVideo) {
-        this.thirdVideo = thirdVideo;
-    }
-
-    public String getFourthVideo() {
-        return fourthVideo;
-    }
-
-    public void setFourthVideo(String fourthVideo) {
-        this.fourthVideo = fourthVideo;
-    }
-
-    public String getBandContent() {
-        return bandContent;
-    }
-
-    public void setBandContent(String bandContent) {
-        this.bandContent = bandContent;
-    }
-
     public String getName() {
         return name;
     }
@@ -113,11 +45,19 @@ public class BandDTO implements Serializable {
         this.name = name;
     }
 
-    public Boolean getUploadedImage() {
-        return uploadedImage;
+    public BandVersionDTO getCurrentVersion() {
+        return currentVersion;
     }
 
-    public void setUploadedImage(Boolean uploadedImage) {
-        this.uploadedImage = uploadedImage;
+    public void setCurrentVersion(BandVersionDTO currentVersion) {
+        this.currentVersion = currentVersion;
+    }
+
+    public Set<BandVersionDTO> getVersions() {
+        return versions;
+    }
+
+    public void setVersions(Set<BandVersionDTO> versions) {
+        this.versions = versions;
     }
 }
