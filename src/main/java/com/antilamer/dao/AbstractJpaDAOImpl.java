@@ -17,7 +17,7 @@ import org.hibernate.Session;
 public abstract class AbstractJpaDAOImpl<T extends Serializable> {
 
     protected Class<T> clazz;
-    @PersistenceContext(unitName = "ordersPortalDataPu")
+    @PersistenceContext(unitName = "persistenceUnit")
     protected EntityManager entityManager;
 
     @SuppressWarnings("unchecked")

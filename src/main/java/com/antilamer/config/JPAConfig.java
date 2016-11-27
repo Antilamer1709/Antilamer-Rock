@@ -28,9 +28,6 @@ import java.util.Properties;
 @ComponentScan("com.antilamer")
 public class JPAConfig {
 
-    @Value("${ordersWs.jpa.persistenceUnitName}")
-    private String persistenceUnitName = "ordersPortalDataPu";
-
     @Resource
     Environment env;
 
@@ -54,7 +51,7 @@ public class JPAConfig {
 //        return emf;
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(dataSource());
-        factoryBean.setPersistenceUnitName(persistenceUnitName);
+        factoryBean.setPersistenceUnitName("persistenceUnit");
         factoryBean.setPackagesToScan(new String[]{"com.antilamer"});
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setShowSql(false);
