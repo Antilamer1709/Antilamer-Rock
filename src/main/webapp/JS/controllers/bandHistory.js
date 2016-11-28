@@ -31,7 +31,7 @@ angular.module('mvcApp').controller('BandHistoryCtrl', ['$scope', '$rootScope', 
                 cellTemplate: '' +
                 '<a href="#/band/history/details/{{grid.appScope.bandId}}/{{row.entity.id}}' +
                 '"class="btn btn-primary" style="padding: 1px 5px;font-size: 12px; + ' +
-                'line-height: 1.5;border-radius: 3px; color: #F4F2F2; margin: 5px" > View</a>',
+                'line-height: 1.5;border-radius: 3px; color: #F4F2F2; margin: 5px; margin-left: 30px;" > View</a>',
                 width: 100
                 // enableSorting: false,
                 // enableFiltering: false,

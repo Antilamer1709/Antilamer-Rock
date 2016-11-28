@@ -2,7 +2,7 @@ package com.antilamer.beans;
 
 import java.io.Serializable;
 
-public class BandSearhBean implements Serializable {
+public class BandSearchBean implements Serializable {
     private Long id;
     private Long page;
 

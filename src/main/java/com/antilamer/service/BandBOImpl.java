@@ -3,7 +3,7 @@ package com.antilamer.service;
 
 import com.antilamer.beans.BandBean;
 import com.antilamer.beans.BandHistoryBean;
-import com.antilamer.beans.BandSearhBean;
+import com.antilamer.beans.BandSearchBean;
 import com.antilamer.beans.CommonSearchBean;
 import com.antilamer.dao.BandDAO;
 import com.antilamer.dao.BandVersionDAO;
@@ -194,11 +194,13 @@ public class BandBOImpl implements BandBO {
     }
 
     @Override
-    public List<BandHistoryBean> seachBandHistory(BandSearhBean searhBean) {
-        logger.info("seachBandHistory start for id: " + searhBean.getId());
-        BandDTO bandDTO = bandDAO.findById(searhBean.getId());
+    @Transactional
+    public List<BandHistoryBean> seachBandHistory(BandSearchBean searchBean) {
+        logger.info("seachBandHistory start for id: " + searchBean.getId());
+        BandDTO bandDTO = bandDAO.findById(searchBean.getId());
         if (bandDTO != null) {
-            Set<BandVersionDTO> versionDTOs = bandDTO.getVersions();
+//            Set<BandVersionDTO> versionDTOs = bandDTO.getVersions();
+            List<BandVersionDTO> versionDTOs = bandVersionDAO.findAllById(searchBean);
             List<BandHistoryBean> beanList = new ArrayList<>();
             if (versionDTOs != null) {
                 for (BandVersionDTO versionDTO : versionDTOs) {
@@ -207,6 +209,6 @@ public class BandBOImpl implements BandBO {
             }
             return beanList;
         }
-        throw new ValidationExeption("Band doesn't exist with id " + searhBean.getId());
+        throw new ValidationExeption("Band doesn't exist with id " + searchBean.getId());
     }
 }

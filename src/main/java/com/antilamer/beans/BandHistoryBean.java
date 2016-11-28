@@ -1,16 +1,14 @@
 package com.antilamer.beans;
 
-import com.antilamer.controller.BandController;
 import com.antilamer.model.BandVersionDTO;
-import org.apache.log4j.Logger;
-
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class BandHistoryBean implements Serializable {
     private Long id;
     private String user;
-    private Date creationDate;
+    private String creationDate;
 
     public BandHistoryBean() {
     }
@@ -18,7 +16,8 @@ public class BandHistoryBean implements Serializable {
     public BandHistoryBean(BandVersionDTO versionDTO) {
         this.id = versionDTO.getId();
         this.user = versionDTO.getUser().getUsername();
-        this.creationDate = versionDTO.getCreationDate();
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        this.creationDate = format1.format(versionDTO.getCreationDate());
     }
 
     public Long getId() {
@@ -29,11 +28,11 @@ public class BandHistoryBean implements Serializable {
         this.id = id;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 

@@ -2,7 +2,7 @@ package com.antilamer.controller;
 
 import com.antilamer.beans.BandBean;
 import com.antilamer.beans.BandHistoryBean;
-import com.antilamer.beans.BandSearhBean;
+import com.antilamer.beans.BandSearchBean;
 import com.antilamer.beans.CommonSearchBean;
 import com.antilamer.exeptions.ServerExeption;
 import com.antilamer.service.BandBO;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -77,7 +76,7 @@ public class BandController {
     @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
     public
     @ResponseBody
-    List<BandHistoryBean> seachBandHistory(HttpServletRequest req, @RequestBody BandSearhBean searchBean){
+    List<BandHistoryBean> seachBandHistory(HttpServletRequest req, @RequestBody BandSearchBean searchBean){
         logger.info("*** seachBandHistory() ");
         if (searchBean != null){
             return bandBO.seachBandHistory(searchBean);

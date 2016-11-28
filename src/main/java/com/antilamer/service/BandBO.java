@@ -3,7 +3,7 @@ package com.antilamer.service;
 
 import com.antilamer.beans.BandBean;
 import com.antilamer.beans.BandHistoryBean;
-import com.antilamer.beans.BandSearhBean;
+import com.antilamer.beans.BandSearchBean;
 import com.antilamer.beans.CommonSearchBean;
 
 import java.util.List;
@@ -18,5 +18,5 @@ public interface BandBO {
 
     void makeVersionCurrent(CommonSearchBean searchBean);
 
-    List<BandHistoryBean> seachBandHistory(BandSearhBean searhBean);
+    List<BandHistoryBean> seachBandHistory(BandSearchBean searhBean);
 }
