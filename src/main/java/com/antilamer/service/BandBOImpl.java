@@ -47,33 +47,10 @@ public class BandBOImpl implements BandBO {
             if (bandDTO.getId() != null) {
                 bean.setId(bandDTO.getId());
             }
-            if (bandDTO.getCurrentVersion().getBandContent() != null) {
-                bean.setBandContent(bandDTO.getCurrentVersion().getBandContent());
-            }
-            if (bandDTO.getCurrentVersion().getImage() != null) {
-                bean.setImage(bandDTO.getCurrentVersion().getImage());
-            }
             if (bandDTO.getName() != null) {
                 bean.setName(bandDTO.getName());
             }
-            if (bandDTO.getCurrentVersion().getOriginalArticle() != null) {
-                bean.setOriginalArticle(bandDTO.getCurrentVersion().getOriginalArticle());
-            }
-            if (bandDTO.getCurrentVersion().getFirstVideo() != null) {
-                bean.setFirstVideo(bandDTO.getCurrentVersion().getFirstVideo());
-            }
-            if (bandDTO.getCurrentVersion().getSecondVideo() != null) {
-                bean.setSecondVideo(bandDTO.getCurrentVersion().getSecondVideo());
-            }
-            if (bandDTO.getCurrentVersion().getThirdVideo() != null) {
-                bean.setThirdVideo(bandDTO.getCurrentVersion().getThirdVideo());
-            }
-            if (bandDTO.getCurrentVersion().getFourthVideo() != null) {
-                bean.setFourthVideo(bandDTO.getCurrentVersion().getFourthVideo());
-            }
-            if (bandDTO.getCurrentVersion().getUploadedImage() != null) {
-                bean.setUploadedImage(bandDTO.getCurrentVersion().getUploadedImage());
-            }
+            initBandBean(bandDTO.getCurrentVersion(), bean);
         }
         logger.info("getBand end for id: " + id);
         return bean;
@@ -89,33 +66,10 @@ public class BandBOImpl implements BandBO {
             if (bandVersionDTO.getId() != null) {
                 bean.setId(bandVersionDTO.getId());
             }
-            if (bandVersionDTO.getBandContent() != null) {
-                bean.setBandContent(bandVersionDTO.getBandContent());
-            }
-            if (bandVersionDTO.getImage() != null) {
-                bean.setImage(bandVersionDTO.getImage());
-            }
             if (bandDTO.getName() != null) {
                 bean.setName(bandDTO.getName());
             }
-            if (bandVersionDTO.getOriginalArticle() != null) {
-                bean.setOriginalArticle(bandVersionDTO.getOriginalArticle());
-            }
-            if (bandVersionDTO.getFirstVideo() != null) {
-                bean.setFirstVideo(bandVersionDTO.getFirstVideo());
-            }
-            if (bandVersionDTO.getSecondVideo() != null) {
-                bean.setSecondVideo(bandVersionDTO.getSecondVideo());
-            }
-            if (bandVersionDTO.getThirdVideo() != null) {
-                bean.setThirdVideo(bandVersionDTO.getThirdVideo());
-            }
-            if (bandVersionDTO.getFourthVideo() != null) {
-                bean.setFourthVideo(bandVersionDTO.getFourthVideo());
-            }
-            if (bandVersionDTO.getUploadedImage() != null) {
-                bean.setUploadedImage(bandVersionDTO.getUploadedImage());
-            }
+            initBandBean(bandVersionDTO, bean);
         }
         return bean;
     }
@@ -129,41 +83,8 @@ public class BandBOImpl implements BandBO {
             throw new ValidationExeption("Content can't be empty!");
         }
         if (bandDTO != null) {
-            BandVersionDTO versionDTO = new BandVersionDTO();
-            if (bean.getOriginalArticle() != null) {
-                versionDTO.setOriginalArticle(bean.getOriginalArticle());
-            }
-            if (bean.getBandContent() != null) {
-                versionDTO.setBandContent(bean.getBandContent());
-            }
-            if (bean.getFirstVideo() != null) {
-                versionDTO.setFirstVideo(bean.getFirstVideo());
-            }
-            if (bean.getSecondVideo() != null) {
-                versionDTO.setSecondVideo(bean.getSecondVideo());
-            }
-            if (bean.getThirdVideo() != null) {
-                versionDTO.setThirdVideo(bean.getThirdVideo());
-            }
-            if (bean.getFourthVideo() != null) {
-                versionDTO.setFourthVideo(bean.getFourthVideo());
-            }
-            if (bean.getFourthVideo() != null) {
-                versionDTO.setFourthVideo(bean.getFourthVideo());
-            }
-            if (bean.getUploadedImage() != null) {
-                if (bean.getUploadedImage()) {
-                    versionDTO.setUploadedImage(true);
-                    versionDTO.setImage(linkPrefix + bandDTO.getId());
-                } else {
-                    versionDTO.setUploadedImage(false);
-                    versionDTO.setImage(bean.getImage());
-                }
-            }
-            versionDTO.setCurrentVersion(true);
-            versionDTO.setCreationDate(new Date());
-            versionDTO.setBand(bandDTO);
-            versionDTO.setUser(userBO.getLoggedUser());
+            setOldVersion(bandDTO);
+            BandVersionDTO versionDTO = createAndInitBandVersionDTO(bean, bandDTO);
             bandVersionDAO.persist(versionDTO);
             bandDTO.setCurrentVersion(versionDTO);
             bandDAO.persist(bandDTO);
@@ -180,6 +101,7 @@ public class BandBOImpl implements BandBO {
         BandDTO bandDTO = bandDAO.findById(searchBean.getId());
         BandVersionDTO versionDTO = bandVersionDAO.findById(searchBean.getVersionId());
         if (bandDTO != null && versionDTO != null) {
+            setOldVersion(bandDTO);
             versionDTO.setCurrentVersion(true);
             versionDTO.setCreationDate(new Date());
             versionDTO.setBand(bandDTO);
@@ -208,5 +130,77 @@ public class BandBOImpl implements BandBO {
             return beanList;
         }
         throw new ValidationExeption("Band doesn't exist with id " + searchBean.getId());
+    }
+
+    private void initBandBean(BandVersionDTO bandVersionDTO, BandBean bean){
+        if (bandVersionDTO.getBandContent() != null) {
+            bean.setBandContent(bandVersionDTO.getBandContent());
+        }
+        if (bandVersionDTO.getImage() != null) {
+            bean.setImage(bandVersionDTO.getImage());
+        }
+        if (bandVersionDTO.getOriginalArticle() != null) {
+            bean.setOriginalArticle(bandVersionDTO.getOriginalArticle());
+        }
+        if (bandVersionDTO.getFirstVideo() != null) {
+            bean.setFirstVideo(bandVersionDTO.getFirstVideo());
+        }
+        if (bandVersionDTO.getSecondVideo() != null) {
+            bean.setSecondVideo(bandVersionDTO.getSecondVideo());
+        }
+        if (bandVersionDTO.getThirdVideo() != null) {
+            bean.setThirdVideo(bandVersionDTO.getThirdVideo());
+        }
+        if (bandVersionDTO.getFourthVideo() != null) {
+            bean.setFourthVideo(bandVersionDTO.getFourthVideo());
+        }
+        if (bandVersionDTO.getUploadedImage() != null) {
+            bean.setUploadedImage(bandVersionDTO.getUploadedImage());
+        }
+    }
+
+    private BandVersionDTO createAndInitBandVersionDTO(BandBean bean, BandDTO bandDTO){
+        BandVersionDTO versionDTO = new BandVersionDTO();
+        if (bean.getOriginalArticle() != null) {
+            versionDTO.setOriginalArticle(bean.getOriginalArticle());
+        }
+        if (bean.getBandContent() != null) {
+            versionDTO.setBandContent(bean.getBandContent());
+        }
+        if (bean.getFirstVideo() != null) {
+            versionDTO.setFirstVideo(bean.getFirstVideo());
+        }
+        if (bean.getSecondVideo() != null) {
+            versionDTO.setSecondVideo(bean.getSecondVideo());
+        }
+        if (bean.getThirdVideo() != null) {
+            versionDTO.setThirdVideo(bean.getThirdVideo());
+        }
+        if (bean.getFourthVideo() != null) {
+            versionDTO.setFourthVideo(bean.getFourthVideo());
+        }
+        if (bean.getFourthVideo() != null) {
+            versionDTO.setFourthVideo(bean.getFourthVideo());
+        }
+        if (bean.getUploadedImage() != null) {
+            if (bean.getUploadedImage()) {
+                versionDTO.setUploadedImage(true);
+                versionDTO.setImage(linkPrefix + bandDTO.getId());
+            } else {
+                versionDTO.setUploadedImage(false);
+                versionDTO.setImage(bean.getImage());
+            }
+        }
+        versionDTO.setCurrentVersion(true);
+        versionDTO.setCreationDate(new Date());
+        versionDTO.setBand(bandDTO);
+        versionDTO.setUser(userBO.getLoggedUser());
+        return versionDTO;
+    }
+
+    private void setOldVersion(BandDTO bandDTO){
+        BandVersionDTO currentVersion = bandDTO.getCurrentVersion();
+        currentVersion.setCurrentVersion(false);
+        bandVersionDAO.persist(currentVersion);
     }
 }
