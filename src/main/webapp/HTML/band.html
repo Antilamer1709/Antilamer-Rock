@@ -4,11 +4,20 @@
         <span class="glyphicon glyphicon-pencil"></span>
         Edit
     </a>
-    <a ng-show="isAdmin && versionId" class="btn btn-default" style="float: right; margin-left: 10px"
-        ng-click="makeVersionCurrent()">
+    <a ng-show="isAdmin && versionId && !band.currentVersion" class="btn btn-default"
+       style="float: right; margin-left: 10px"
+       ng-click="makeVersionCurrent()">
         <span class="glyphicon glyphicon-pencil"></span>
         Make current
     </a>
+    <div style="float: right; margin-left: 10px; font-size: 43px; position: relative; top: -10px">
+
+        <b>
+            <span ng-if="isAdmin && versionId && band.currentVersion" class="label label-primary">
+                Actual Version
+            </span>
+        </b>
+    </div>
     <a ng-show="isAdmin" href="{{historyLink}}"
        class="btn btn-default" style="float: right; margin-left: 10px">
         <span class="glyphicon glyphicon-th"></span>
@@ -32,7 +41,8 @@
 
     <div class="break"></div>
 
-    <br><hr>
+    <br>
+    <hr>
 
     <a href="{{band.originalArticle}}" target=_blank>Original article</a>
 

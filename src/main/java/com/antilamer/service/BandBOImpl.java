@@ -157,6 +157,9 @@ public class BandBOImpl implements BandBO {
         if (bandVersionDTO.getUploadedImage() != null) {
             bean.setUploadedImage(bandVersionDTO.getUploadedImage());
         }
+        if (bandVersionDTO.getCurrentVersion() != null) {
+            bean.setCurrentVersion(bandVersionDTO.getCurrentVersion());
+        }
     }
 
     private BandVersionDTO createAndInitBandVersionDTO(BandBean bean, BandDTO bandDTO){

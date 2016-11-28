@@ -13,6 +13,7 @@ public class BandBean implements Serializable {
     private String thirdVideo;
     private String fourthVideo;
     private Boolean uploadedImage;
+    private Boolean currentVersion;
 
     public Long getId() {
         return id;
@@ -92,5 +93,13 @@ public class BandBean implements Serializable {
 
     public void setUploadedImage(Boolean uploadedImage) {
         this.uploadedImage = uploadedImage;
+    }
+
+    public Boolean getCurrentVersion() {
+        return currentVersion;
+    }
+
+    public void setCurrentVersion(Boolean currentVersion) {
+        this.currentVersion = currentVersion;
     }
 }
