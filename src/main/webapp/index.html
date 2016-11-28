@@ -55,7 +55,7 @@
                             </div>
                         </ul>
                     </li>
-                    <li class="{{chat ? active : ''}}"><a href="#/chat">Chat</a></li>
+                    <li ng-show="user.logged" class="{{chat ? active : ''}}"><a href="#/chat">Chat</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
