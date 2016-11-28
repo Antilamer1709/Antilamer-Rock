@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Service(value = "bandBO")
 public class BandBOImpl implements BandBO {
@@ -199,7 +198,6 @@ public class BandBOImpl implements BandBO {
         logger.info("seachBandHistory start for id: " + searchBean.getId());
         BandDTO bandDTO = bandDAO.findById(searchBean.getId());
         if (bandDTO != null) {
-//            Set<BandVersionDTO> versionDTOs = bandDTO.getVersions();
             List<BandVersionDTO> versionDTOs = bandVersionDAO.findAllById(searchBean);
             List<BandHistoryBean> beanList = new ArrayList<>();
             if (versionDTOs != null) {
