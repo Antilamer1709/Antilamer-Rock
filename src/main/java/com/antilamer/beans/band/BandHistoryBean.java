@@ -1,4 +1,4 @@
-package com.antilamer.beans;
+package com.antilamer.beans.band;
 
 import com.antilamer.model.BandVersionDTO;
 import java.io.Serializable;

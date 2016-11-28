@@ -4,6 +4,8 @@ angular.module('mvcApp').controller('BandCtrl', ['$scope', '$rootScope', '$route
     $scope.band;
     $rootScope.home = false;
     $rootScope.bands = true;
+    $rootScope.chat = false;
+
 
 
     $scope.editLink = "#/band/edit/" + $scope.bandId;

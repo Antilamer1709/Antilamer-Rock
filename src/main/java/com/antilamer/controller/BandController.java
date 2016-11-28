@@ -1,9 +1,9 @@
 package com.antilamer.controller;
 
-import com.antilamer.beans.BandBean;
-import com.antilamer.beans.BandHistoryBean;
-import com.antilamer.beans.BandSearchBean;
-import com.antilamer.beans.CommonSearchBean;
+import com.antilamer.beans.band.BandBean;
+import com.antilamer.beans.band.BandHistoryBean;
+import com.antilamer.beans.band.BandSearchBean;
+import com.antilamer.beans.common.CommonSearchBean;
 import com.antilamer.exeptions.ServerExeption;
 import com.antilamer.service.BandBO;
 import org.apache.log4j.Logger;

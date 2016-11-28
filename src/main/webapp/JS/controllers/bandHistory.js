@@ -3,6 +3,7 @@ angular.module('mvcApp').controller('BandHistoryCtrl', ['$scope', '$rootScope', 
     $scope.bandId = $routeParams.bandId;
     $rootScope.home = false;
     $rootScope.bands = true;
+    $rootScope.chat = false;
     $scope.returnLink = "#/band/" + $scope.bandId;
     $scope.band = {}
 

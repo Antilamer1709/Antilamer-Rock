@@ -3,6 +3,7 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
     $rootScope.block = false;
     $rootScope.home = true;
     $rootScope.bands = false;
+    $rootScope.chat = false;
     $scope.active = "active";
     $scope.user = {};
     $scope.user.username = "";

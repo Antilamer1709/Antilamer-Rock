@@ -1,12 +1,16 @@
-package com.antilamer.beans;
+package com.antilamer.beans.user;
 
 import java.io.Serializable;
 
-public class UserLoginBean implements Serializable {
+/**
+ * Created by antilamer on 11.09.16.
+ */
+public class UserRegistrationBean implements Serializable {
     private Long id;
     private String username;
+    private String email;
     private String password;
-    private Boolean remember;
+    private String confirmPassword;
 
     public Long getId() {
         return id;
@@ -24,6 +28,14 @@ public class UserLoginBean implements Serializable {
         this.username = username;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -32,11 +44,11 @@ public class UserLoginBean implements Serializable {
         this.password = password;
     }
 
-    public Boolean getRemember() {
-        return remember;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setRemember(Boolean remember) {
-        this.remember = remember;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

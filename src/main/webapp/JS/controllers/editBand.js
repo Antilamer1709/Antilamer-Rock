@@ -3,6 +3,7 @@ angular.module('mvcApp').controller('EditBandCtrl', ['$scope', '$rootScope', '$r
     $scope.bandId = $routeParams.bandId;
     $rootScope.home = false;
     $rootScope.bands = true;
+    $rootScope.chat = false;
     $scope.band = {};
     $scope.band.bandContent = "";
     $scope.saveContent = "";

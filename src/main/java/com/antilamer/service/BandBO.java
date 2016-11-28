@@ -1,10 +1,10 @@
 package com.antilamer.service;
 
 
-import com.antilamer.beans.BandBean;
-import com.antilamer.beans.BandHistoryBean;
-import com.antilamer.beans.BandSearchBean;
-import com.antilamer.beans.CommonSearchBean;
+import com.antilamer.beans.band.BandBean;
+import com.antilamer.beans.band.BandHistoryBean;
+import com.antilamer.beans.band.BandSearchBean;
+import com.antilamer.beans.common.CommonSearchBean;
 
 import java.util.List;
 

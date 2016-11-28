@@ -9,6 +9,7 @@
     <link href="bower_components/ngtoast/dist/ngToast.min.css" rel="stylesheet">
     <link href="bower_components/angular-bootstrap-toggle-switch/style/bootstrap2/angular-toggle-switch-bootstrap-2.css" rel="stylesheet">
     <link href="bower_components/angular-ui-grid/ui-grid.min.css" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/png" href="images/koza.png">
 </head>
 
@@ -54,6 +55,7 @@
                             </div>
                         </ul>
                     </li>
+                    <li class="{{chat ? active : ''}}"><a href="#/chat">Chat</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -209,15 +211,20 @@
 <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
 <script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
 <script src="bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.min.js"></script>
+<script src="bower_components/sockjs/sockjs.min.js" type="text/javascript"></script>
+<script src="bower_components/stomp-websocket/lib/stomp.min.js" type="text/javascript"></script>
+<script src="bower_components/lodash/dist/lodash.min.js"></script>
 <script src="JS/mvcApp.js"></script>
 <script src="JS/services/common-service.js"></script>
 <script src="JS/directives/directives.js"></script>
 <script src="JS/configuration/config.js"></script>
 <script src="JS/services/band-service.js"></script>
 <script src="JS/services/user-service.js"></script>
+<script src="JS/services/chat-service.js"></script>
 <script src="JS/controllers/index.js"></script>
 <script src="JS/controllers/band.js"></script>
 <script src="JS/controllers/editBand.js"></script>
 <script src="JS/controllers/bandHistory.js"></script>
 <script src="JS/controllers/bandHistoryDetails.js"></script>
+<script src="JS/controllers/chat.js"></script>
 </html>

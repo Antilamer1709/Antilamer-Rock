@@ -1,0 +1,16 @@
+<img src="http://risovach.ru/upload/2013/07/mem/rock-forever_24583029_orig_.jpeg" style="float: right; height: 450px">
+<div class="padding21 chat" style="height: 800px">
+    <h1>Rock-Chat</h1>
+    <form ng-submit="addMessage()" name="messageForm" >
+        <input class="chatInput" type="text" placeholder="Compose a new message..." ng-model="message"/>
+        <div class="info">
+            <button class="chatButton" ng-disabled="message.length > max || message.length === 0">Send</button>
+            <span class="count" ng-bind="max - message.length" ng-class="{danger: message.length > max}">140</span>
+        </div>
+    </form>
+    <hr/>
+    <p ng-repeat="message in messages | orderBy:'time':true" class="message">
+        <time>{{message.time | date:'HH:mm'}}</time>
+        <span ng-class="{self: message.self}">{{message.message}}</span>
+    </p>
+</div>

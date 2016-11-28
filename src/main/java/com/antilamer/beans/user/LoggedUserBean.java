@@ -1,4 +1,4 @@
-package com.antilamer.beans;
+package com.antilamer.beans.user;
 
 import org.springframework.security.core.GrantedAuthority;
 

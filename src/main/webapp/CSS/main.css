@@ -273,3 +273,72 @@ ul.dropdown-lr {
 .grid{
     height: 380px;
 }
+
+.chat{
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+}
+.chatInput{
+    width: 50%;
+    border: solid 1px #D4D4D1;
+    transition: .7s;
+    font-size: 1.1em;
+    padding: 0.3em;
+    margin: 0.2em 0;
+}
+.chatInput[type=text]:focus {
+    -webkit-box-shadow: 0 0 5px 0 #CBC9C9;
+    -moz-box-shadow: 0 0 5px 0 #A4A2A2;
+    box-shadow: 0 0 5px 0 #898787;
+    border-color: #6B6969;
+    outline: none;
+}
+.chatButton{
+    background: #898787;
+    color: #FFF;
+    font-weight: 600;
+    padding: .3em 1.9em;
+    border: none;
+    font-size: 1.2em;
+    margin: 0;
+    text-shadow: 0 0 5px rgba(0, 0, 0, .3);
+    cursor: pointer;
+    transition: .7s;
+}
+.chatButton:focus {
+    outline: none;
+}
+
+.chatButton:hover {
+    background: #222222;
+}
+
+.count {
+    font-weight: 300;
+    font-size: 1.35em;
+    color: #CCC;
+    transition: .7s;
+}
+
+.count.danger {
+    color: #a94442;
+    font-weight: 600;
+}
+
+.message time {
+    color: #999;
+    float: left;
+}
+
+.message {
+}
+
+.message .self {
+    font-weight: 600;
+}
+
+.message span {
+    padding-left: 20px;
+    border-left: solid 1px #F1F1F1;
+    padding-bottom: .5em;
+}

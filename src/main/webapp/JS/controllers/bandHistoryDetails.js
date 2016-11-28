@@ -5,6 +5,7 @@ angular.module('mvcApp').controller('BandHistoryDetails', ['$scope', '$rootScope
     $scope.band;
     $rootScope.home = false;
     $rootScope.bands = true;
+    $rootScope.chat = false;
 
 
     $scope.editLink = "#/band/edit/" + $scope.bandId;

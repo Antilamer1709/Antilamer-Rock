@@ -12,7 +12,7 @@ angular.module('mvcApp', [
         $routeSegmentProvider
             .when('/', 'index')
             .when('/index', 'index')
-            .when('/configuration', 'configuration')
+            .when('/chat', 'chat')
             .when('/band/:bandId', 'band')
             .when('/band/edit/:bandId', 'editBand')
             .when('/band/history/:bandId', 'bandHistory')
@@ -21,6 +21,11 @@ angular.module('mvcApp', [
         $routeSegmentProvider.segment('index', {
             templateUrl: 'HTML/home.html',
             controller: 'IndexCtrl'
+        });
+
+        $routeSegmentProvider.segment('chat', {
+            templateUrl: 'HTML/chat.html',
+            controller: 'ChatCtrl'
         });
 
         $routeSegmentProvider.segment('band', {

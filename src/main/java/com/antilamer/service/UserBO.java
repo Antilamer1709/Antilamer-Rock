@@ -1,8 +1,8 @@
 package com.antilamer.service;
 
-import com.antilamer.beans.LoggedUserBean;
-import com.antilamer.beans.UserLoginBean;
-import com.antilamer.beans.UserRegistrationBean;
+import com.antilamer.beans.user.LoggedUserBean;
+import com.antilamer.beans.user.UserLoginBean;
+import com.antilamer.beans.user.UserRegistrationBean;
 import com.antilamer.exeptions.ValidationExeption;
 import com.antilamer.model.UserDTO;
 import org.springframework.http.ResponseEntity;

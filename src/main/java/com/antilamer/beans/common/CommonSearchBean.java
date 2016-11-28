@@ -1,4 +1,4 @@
-package com.antilamer.beans;
+package com.antilamer.beans.common;
 
 import java.io.Serializable;
 

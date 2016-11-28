@@ -1,6 +1,6 @@
 package com.antilamer.dao;
 
-import com.antilamer.beans.BandSearchBean;
+import com.antilamer.beans.band.BandSearchBean;
 import com.antilamer.model.BandVersionDTO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
