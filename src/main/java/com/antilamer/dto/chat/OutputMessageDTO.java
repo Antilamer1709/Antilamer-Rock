@@ -1,11 +1,11 @@
-package com.antilamer.beans.chat;
+package com.antilamer.dto.chat;
 
 import java.util.Date;
 
-public class OutputMessageBean extends MessageBean {
+public class OutputMessageDTO extends MessageDTO {
     private Date time;
 
-    public OutputMessageBean(MessageBean original, Date time) {
+    public OutputMessageDTO(MessageDTO original, Date time) {
         super(original.getId(), original.getMessage());
         this.time = time;
     }

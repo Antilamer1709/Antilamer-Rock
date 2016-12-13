@@ -1,8 +1,8 @@
 package com.antilamer.controller;
 
-import com.antilamer.beans.user.LoggedUserBean;
-import com.antilamer.beans.user.UserLoginBean;
-import com.antilamer.beans.user.UserRegistrationBean;
+import com.antilamer.dto.user.LoggedUserDTO;
+import com.antilamer.dto.user.UserLoginDTO;
+import com.antilamer.dto.user.UserRegistrationDTO;
 import com.antilamer.exeptions.ServerExeption;
 import com.antilamer.exeptions.ValidationExeption;
 import com.antilamer.service.UserBO;
@@ -26,7 +26,7 @@ public class UserController {
 
     @RequestMapping(value = "registerUser", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
-    public void registerUser(@RequestBody UserRegistrationBean registrationBean) throws ValidationExeption {
+    public void registerUser(@RequestBody UserRegistrationDTO registrationBean) throws ValidationExeption {
         logger.info("*** registerUser()");
         if (registrationBean != null) {
             userBO.registerUser(registrationBean);
@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ResponseEntity<?> login(@RequestBody UserLoginBean loginBean, HttpServletRequest req) throws Exception {
+    public ResponseEntity<?> login(@RequestBody UserLoginDTO loginBean, HttpServletRequest req) throws Exception {
         logger.info("*** loginBean()");
         if (loginBean != null) {
             return userBO.login(loginBean, req);
@@ -47,7 +47,7 @@ public class UserController {
     @RequestMapping(value = "currentUser", method = RequestMethod.POST)
     public
     @ResponseBody
-    LoggedUserBean login(HttpServletRequest req) throws Exception {
+    LoggedUserDTO login(HttpServletRequest req) throws Exception {
         logger.info("*** currentUser()");
         return userBO.currentUser();
     }

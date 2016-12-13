@@ -1,4 +1,4 @@
-package com.antilamer.model;
+package com.antilamer.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -7,7 +7,7 @@ import org.hibernate.annotations.Index;
 
 @Entity
 @Table(name = "USERS")
-public class UserDTO implements Serializable {
+public class UserEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,9 +29,9 @@ public class UserDTO implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ROLE_ID")
     @Index(name = "U_ROLE_ID_IDX")
-    private RoleDTO role;
+    private RoleEntity role;
 
-    public UserDTO() {
+    public UserEntity() {
     }
 
     public Long getId() {
@@ -74,11 +74,11 @@ public class UserDTO implements Serializable {
         this.registrationDate = registrationDate;
     }
 
-    public RoleDTO getRole() {
+    public RoleEntity getRole() {
         return role;
     }
 
-    public void setRole(RoleDTO role) {
+    public void setRole(RoleEntity role) {
         this.role = role;
     }
 }

@@ -1,19 +1,19 @@
-package com.antilamer.beans.band;
+package com.antilamer.dto.band;
 
-import com.antilamer.model.BandVersionDTO;
+import com.antilamer.entity.BandVersionEntity;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class BandHistoryBean implements Serializable {
+public class BandHistoryDTO implements Serializable {
     private Long id;
     private String user;
     private String creationDate;
 
-    public BandHistoryBean() {
+    public BandHistoryDTO() {
     }
 
-    public BandHistoryBean(BandVersionDTO versionDTO) {
+    public BandHistoryDTO(BandVersionEntity versionDTO) {
         this.id = versionDTO.getId();
         this.user = versionDTO.getUser().getUsername();
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");

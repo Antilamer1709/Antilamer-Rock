@@ -1,14 +1,14 @@
-package com.antilamer.beans.chat;
+package com.antilamer.dto.chat;
 
-public class MessageBean {
+public class MessageDTO {
     private String message;
     private int id;
 
-    public MessageBean() {
+    public MessageDTO() {
 
     }
 
-    public MessageBean(int id, String message) {
+    public MessageDTO(int id, String message) {
         this.id = id;
         this.message = message;
     }

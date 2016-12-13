@@ -1,7 +1,7 @@
 package com.antilamer.dao;
 
 
-import com.antilamer.model.UserDTO;
+import com.antilamer.entity.UserEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,17 +10,17 @@ import java.util.List;
 
 @Transactional
 @Repository
-public class UserDAOImpl extends AbstractJpaDAOImpl<UserDTO> implements UserDAO{
+public class UserDAOImpl extends AbstractJpaDAOImpl<UserEntity> implements UserDAO{
     @Override
-    public UserDTO getByUsername(String username) {
+    public UserEntity getByUsername(String username) {
         String sql =
                 "select a"
-                        + " from UserDTO a"
+                        + " from UserEntity a"
                         + " where lower(a.username) = :username";
 
         Query query = entityManager.createQuery(sql);
         query.setParameter("username", username);
-        List<UserDTO> result = query.getResultList();
+        List<UserEntity> result = query.getResultList();
         if(result != null && !result.isEmpty()) {
             return result.get(0);
         }
@@ -28,15 +28,15 @@ public class UserDAOImpl extends AbstractJpaDAOImpl<UserDTO> implements UserDAO{
     }
 
     @Override
-    public UserDTO getByEmail(String email) {
+    public UserEntity getByEmail(String email) {
         String sql =
                 "select a"
-                        + " from UserDTO a"
+                        + " from UserEntity a"
                         + " where a.email = :email";
 
         Query query = entityManager.createQuery(sql);
         query.setParameter("email", email);
-        List<UserDTO> result = query.getResultList();
+        List<UserEntity> result = query.getResultList();
         if(result != null && !result.isEmpty()) {
             return result.get(0);
         }

@@ -1,8 +1,6 @@
 package com.antilamer.service;
 
 import com.antilamer.dao.BandDAO;
-import com.antilamer.exeptions.ValidationExeption;
-import com.antilamer.model.BandDTO;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

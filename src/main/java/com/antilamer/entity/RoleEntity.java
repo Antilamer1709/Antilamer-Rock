@@ -1,11 +1,11 @@
-package com.antilamer.model;
+package com.antilamer.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "ROLES")
-public class RoleDTO implements Serializable{
+public class RoleEntity implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")

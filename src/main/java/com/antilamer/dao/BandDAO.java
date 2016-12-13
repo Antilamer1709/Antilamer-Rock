@@ -1,7 +1,7 @@
 package com.antilamer.dao;
 
-import com.antilamer.model.BandDTO;
+import com.antilamer.entity.BandEntity;
 
-public interface BandDAO extends AbstractJpaDAO<BandDTO> {
-//    BandDTO findById(Long id);
+public interface BandDAO extends AbstractJpaDAO<BandEntity> {
+//    BandEntity findById(Long id);
 }

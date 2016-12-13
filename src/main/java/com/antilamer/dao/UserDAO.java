@@ -1,8 +1,8 @@
 package com.antilamer.dao;
 
-import com.antilamer.model.UserDTO;
+import com.antilamer.entity.UserEntity;
 
-public interface UserDAO extends AbstractJpaDAO<UserDTO> {
-    UserDTO getByUsername(String username);
-    UserDTO getByEmail(String email);
+public interface UserDAO extends AbstractJpaDAO<UserEntity> {
+    UserEntity getByUsername(String username);
+    UserEntity getByEmail(String email);
 }

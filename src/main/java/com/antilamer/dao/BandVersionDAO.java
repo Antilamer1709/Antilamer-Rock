@@ -1,12 +1,12 @@
 package com.antilamer.dao;
 
-import com.antilamer.beans.band.BandSearchBean;
-import com.antilamer.model.BandVersionDTO;
+import com.antilamer.dto.band.BandSearchDTO;
+import com.antilamer.entity.BandVersionEntity;
 
 import java.util.List;
 
-public interface BandVersionDAO extends AbstractJpaDAO<BandVersionDTO>{
+public interface BandVersionDAO extends AbstractJpaDAO<BandVersionEntity>{
 
-    List<BandVersionDTO> findAllById(BandSearchBean searhBean);
+    List<BandVersionEntity> findAllById(BandSearchDTO searhDTO);
 
 }

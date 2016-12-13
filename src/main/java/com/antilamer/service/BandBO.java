@@ -1,22 +1,22 @@
 package com.antilamer.service;
 
 
-import com.antilamer.beans.band.BandBean;
-import com.antilamer.beans.band.BandHistoryBean;
-import com.antilamer.beans.band.BandSearchBean;
-import com.antilamer.beans.common.CommonSearchBean;
+import com.antilamer.dto.band.BandDTO;
+import com.antilamer.dto.band.BandHistoryDTO;
+import com.antilamer.dto.band.BandSearchDTO;
+import com.antilamer.dto.common.CommonSearchDTO;
 
 import java.util.List;
 
 public interface BandBO {
 
-    BandBean getBand(Long id);
+    BandDTO getBand(Long id);
 
-    BandBean getBandVersion(CommonSearchBean searchBean);
+    BandDTO getBandVersion(CommonSearchDTO searchDTO);
 
-    void saveBand(BandBean bean);
+    void saveBand(BandDTO bandDTO);
 
-    void makeVersionCurrent(CommonSearchBean searchBean);
+    void makeVersionCurrent(CommonSearchDTO searchDTO);
 
-    List<BandHistoryBean> seachBandHistory(BandSearchBean searhBean);
+    List<BandHistoryDTO> seachBandHistory(BandSearchDTO searhDTO);
 }

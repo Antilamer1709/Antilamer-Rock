@@ -1,11 +1,8 @@
-package com.antilamer.beans.user;
-
-import org.springframework.security.core.GrantedAuthority;
+package com.antilamer.dto.user;
 
 import java.io.Serializable;
-import java.util.Collection;
 
-public class LoggedUserBean implements Serializable {
+public class LoggedUserDTO implements Serializable {
     private Long id;
     private String username;
     private String role;

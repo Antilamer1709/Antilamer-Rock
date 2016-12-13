@@ -1,15 +1,15 @@
 package com.antilamer.service;
 
 
-import com.antilamer.beans.band.BandBean;
-import com.antilamer.beans.band.BandHistoryBean;
-import com.antilamer.beans.band.BandSearchBean;
-import com.antilamer.beans.common.CommonSearchBean;
+import com.antilamer.dto.band.BandDTO;
+import com.antilamer.dto.band.BandHistoryDTO;
+import com.antilamer.dto.band.BandSearchDTO;
+import com.antilamer.dto.common.CommonSearchDTO;
 import com.antilamer.dao.BandDAO;
 import com.antilamer.dao.BandVersionDAO;
+import com.antilamer.entity.BandEntity;
+import com.antilamer.entity.BandVersionEntity;
 import com.antilamer.exeptions.ValidationExeption;
-import com.antilamer.model.BandDTO;
-import com.antilamer.model.BandVersionDTO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,170 +39,170 @@ public class BandBOImpl implements BandBO {
 
     @Override
     @Transactional
-    public BandBean getBand(Long id) {
+    public BandDTO getBand(Long id) {
         logger.info("getBand start for id: " + id);
-        BandDTO bandDTO = bandDAO.findById(id);
-        BandBean bean = new BandBean();
-        if (bandDTO != null) {
-            if (bandDTO.getId() != null) {
-                bean.setId(bandDTO.getId());
+        BandEntity bandEntity = bandDAO.findById(id);
+        BandDTO bandDTO = new BandDTO();
+        if (bandEntity != null) {
+            if (bandEntity.getId() != null) {
+                bandDTO.setId(bandEntity.getId());
             }
-            if (bandDTO.getName() != null) {
-                bean.setName(bandDTO.getName());
+            if (bandEntity.getName() != null) {
+                bandDTO.setName(bandEntity.getName());
             }
-            initBandBean(bandDTO.getCurrentVersion(), bean);
+            initBandDTO(bandEntity.getCurrentVersion(), bandDTO);
         }
         logger.info("getBand end for id: " + id);
-        return bean;
+        return bandDTO;
     }
 
     @Override
-    public BandBean getBandVersion(CommonSearchBean searchBean) {
-        logger.info("getBandVersion() start for verionId: " + searchBean.getVersionId());
-        BandDTO bandDTO = bandDAO.findById(searchBean.getId());
-        BandVersionDTO bandVersionDTO = bandVersionDAO.findById(searchBean.getVersionId());
-        BandBean bean = new BandBean();
-        if (bandVersionDTO != null && bandDTO != null) {
-            if (bandVersionDTO.getId() != null) {
-                bean.setId(bandVersionDTO.getId());
+    public BandDTO getBandVersion(CommonSearchDTO searchDTO) {
+        logger.info("getBandVersion() start for verionId: " + searchDTO.getVersionId());
+        BandEntity bandEntity = bandDAO.findById(searchDTO.getId());
+        BandVersionEntity bandVersionEntity = bandVersionDAO.findById(searchDTO.getVersionId());
+        BandDTO bandDTO = new BandDTO();
+        if (bandVersionEntity != null && bandEntity != null) {
+            if (bandVersionEntity.getId() != null) {
+                bandDTO.setId(bandVersionEntity.getId());
             }
-            if (bandDTO.getName() != null) {
-                bean.setName(bandDTO.getName());
+            if (bandEntity.getName() != null) {
+                bandDTO.setName(bandEntity.getName());
             }
-            initBandBean(bandVersionDTO, bean);
+            initBandDTO(bandVersionEntity, bandDTO);
         }
-        return bean;
+        return bandDTO;
     }
 
     @Override
     @Transactional
-    public void saveBand(BandBean bean) {
-        logger.info("saveBand start for id: " + bean.getId());
-        BandDTO bandDTO = bandDAO.findById(bean.getId());
-        if (bean.getBandContent().isEmpty()) {
+    public void saveBand(BandDTO bandDTO) {
+        logger.info("saveBand start for id: " + bandDTO.getId());
+        BandEntity bandEntity = bandDAO.findById(bandDTO.getId());
+        if (bandDTO.getBandContent().isEmpty()) {
             throw new ValidationExeption("Content can't be empty!");
         }
-        if (bandDTO != null) {
-            setOldVersion(bandDTO);
-            BandVersionDTO versionDTO = createAndInitBandVersionDTO(bean, bandDTO);
-            bandVersionDAO.persist(versionDTO);
-            bandDTO.setCurrentVersion(versionDTO);
-            bandDAO.persist(bandDTO);
-            logger.info("saveBand end for id: " + bean.getId());
+        if (bandEntity != null) {
+            setOldVersion(bandEntity);
+            BandVersionEntity versionEntity = createAndInitBandVersionEntity(bandDTO, bandEntity);
+            bandVersionDAO.persist(versionEntity);
+            bandEntity.setCurrentVersion(versionEntity);
+            bandDAO.persist(bandEntity);
+            logger.info("saveBand end for id: " + bandDTO.getId());
         } else {
-            throw new ValidationExeption("Band doesn't exist with id " + bean.getId());
+            throw new ValidationExeption("Band doesn't exist with id " + bandDTO.getId());
         }
     }
 
     @Override
     @Transactional
-    public void makeVersionCurrent(CommonSearchBean searchBean) {
-        logger.info("makeVersionCurrent start for versionId: " + searchBean.getVersionId());
-        BandDTO bandDTO = bandDAO.findById(searchBean.getId());
-        BandVersionDTO versionDTO = bandVersionDAO.findById(searchBean.getVersionId());
-        if (bandDTO != null && versionDTO != null) {
-            setOldVersion(bandDTO);
-            versionDTO.setCurrentVersion(true);
-            versionDTO.setCreationDate(new Date());
-            versionDTO.setBand(bandDTO);
-            versionDTO.setUser(userBO.getLoggedUser());
-            bandDTO.setCurrentVersion(versionDTO);
-            bandDAO.persist(bandDTO);
-            logger.info("makeVersionCurrent end for id: " + searchBean.getVersionId());
+    public void makeVersionCurrent(CommonSearchDTO searchDTO) {
+        logger.info("makeVersionCurrent start for versionId: " + searchDTO.getVersionId());
+        BandEntity bandEntity = bandDAO.findById(searchDTO.getId());
+        BandVersionEntity versionEntity = bandVersionDAO.findById(searchDTO.getVersionId());
+        if (bandEntity != null && versionEntity != null) {
+            setOldVersion(bandEntity);
+            versionEntity.setCurrentVersion(true);
+            versionEntity.setCreationDate(new Date());
+            versionEntity.setBand(bandEntity);
+            versionEntity.setUser(userBO.getLoggedUser());
+            bandEntity.setCurrentVersion(versionEntity);
+            bandDAO.persist(bandEntity);
+            logger.info("makeVersionCurrent end for id: " + searchDTO.getVersionId());
         } else {
-            throw new ValidationExeption("Band doesn't exist with id " + searchBean.getId());
+            throw new ValidationExeption("Band doesn't exist with id " + searchDTO.getId());
         }
     }
 
     @Override
     @Transactional
-    public List<BandHistoryBean> seachBandHistory(BandSearchBean searchBean) {
-        logger.info("seachBandHistory start for id: " + searchBean.getId());
-        BandDTO bandDTO = bandDAO.findById(searchBean.getId());
-        if (bandDTO != null) {
-            List<BandVersionDTO> versionDTOs = bandVersionDAO.findAllById(searchBean);
-            List<BandHistoryBean> beanList = new ArrayList<>();
-            if (versionDTOs != null) {
-                for (BandVersionDTO versionDTO : versionDTOs) {
-                    beanList.add(new BandHistoryBean(versionDTO));
+    public List<BandHistoryDTO> seachBandHistory(BandSearchDTO searchDTO) {
+        logger.info("seachBandHistory start for id: " + searchDTO.getId());
+        BandEntity bandEntity = bandDAO.findById(searchDTO.getId());
+        if (bandEntity != null) {
+            List<BandVersionEntity> versionEntities = bandVersionDAO.findAllById(searchDTO);
+            List<BandHistoryDTO> historyDTOs = new ArrayList<>();
+            if (versionEntities != null) {
+                for (BandVersionEntity versionEntity : versionEntities) {
+                    historyDTOs.add(new BandHistoryDTO(versionEntity));
                 }
             }
-            return beanList;
+            return historyDTOs;
         }
-        throw new ValidationExeption("Band doesn't exist with id " + searchBean.getId());
+        throw new ValidationExeption("Band doesn't exist with id " + searchDTO.getId());
     }
 
-    private void initBandBean(BandVersionDTO bandVersionDTO, BandBean bean){
-        if (bandVersionDTO.getBandContent() != null) {
-            bean.setBandContent(bandVersionDTO.getBandContent());
+    private void initBandDTO(BandVersionEntity versionEntity, BandDTO bandDTO){
+        if (versionEntity.getBandContent() != null) {
+            bandDTO.setBandContent(versionEntity.getBandContent());
         }
-        if (bandVersionDTO.getImage() != null) {
-            bean.setImage(bandVersionDTO.getImage());
+        if (versionEntity.getImage() != null) {
+            bandDTO.setImage(versionEntity.getImage());
         }
-        if (bandVersionDTO.getOriginalArticle() != null) {
-            bean.setOriginalArticle(bandVersionDTO.getOriginalArticle());
+        if (versionEntity.getOriginalArticle() != null) {
+            bandDTO.setOriginalArticle(versionEntity.getOriginalArticle());
         }
-        if (bandVersionDTO.getFirstVideo() != null) {
-            bean.setFirstVideo(bandVersionDTO.getFirstVideo());
+        if (versionEntity.getFirstVideo() != null) {
+            bandDTO.setFirstVideo(versionEntity.getFirstVideo());
         }
-        if (bandVersionDTO.getSecondVideo() != null) {
-            bean.setSecondVideo(bandVersionDTO.getSecondVideo());
+        if (versionEntity.getSecondVideo() != null) {
+            bandDTO.setSecondVideo(versionEntity.getSecondVideo());
         }
-        if (bandVersionDTO.getThirdVideo() != null) {
-            bean.setThirdVideo(bandVersionDTO.getThirdVideo());
+        if (versionEntity.getThirdVideo() != null) {
+            bandDTO.setThirdVideo(versionEntity.getThirdVideo());
         }
-        if (bandVersionDTO.getFourthVideo() != null) {
-            bean.setFourthVideo(bandVersionDTO.getFourthVideo());
+        if (versionEntity.getFourthVideo() != null) {
+            bandDTO.setFourthVideo(versionEntity.getFourthVideo());
         }
-        if (bandVersionDTO.getUploadedImage() != null) {
-            bean.setUploadedImage(bandVersionDTO.getUploadedImage());
+        if (versionEntity.getUploadedImage() != null) {
+            bandDTO.setUploadedImage(versionEntity.getUploadedImage());
         }
-        if (bandVersionDTO.getCurrentVersion() != null) {
-            bean.setCurrentVersion(bandVersionDTO.getCurrentVersion());
+        if (versionEntity.getCurrentVersion() != null) {
+            bandDTO.setCurrentVersion(versionEntity.getCurrentVersion());
         }
     }
 
-    private BandVersionDTO createAndInitBandVersionDTO(BandBean bean, BandDTO bandDTO){
-        BandVersionDTO versionDTO = new BandVersionDTO();
-        if (bean.getOriginalArticle() != null) {
-            versionDTO.setOriginalArticle(bean.getOriginalArticle());
+    private BandVersionEntity createAndInitBandVersionEntity(BandDTO bandDTO, BandEntity bandEntity){
+        BandVersionEntity versionEntity = new BandVersionEntity();
+        if (bandDTO.getOriginalArticle() != null) {
+            versionEntity.setOriginalArticle(bandDTO.getOriginalArticle());
         }
-        if (bean.getBandContent() != null) {
-            versionDTO.setBandContent(bean.getBandContent());
+        if (bandDTO.getBandContent() != null) {
+            versionEntity.setBandContent(bandDTO.getBandContent());
         }
-        if (bean.getFirstVideo() != null) {
-            versionDTO.setFirstVideo(bean.getFirstVideo());
+        if (bandDTO.getFirstVideo() != null) {
+            versionEntity.setFirstVideo(bandDTO.getFirstVideo());
         }
-        if (bean.getSecondVideo() != null) {
-            versionDTO.setSecondVideo(bean.getSecondVideo());
+        if (bandDTO.getSecondVideo() != null) {
+            versionEntity.setSecondVideo(bandDTO.getSecondVideo());
         }
-        if (bean.getThirdVideo() != null) {
-            versionDTO.setThirdVideo(bean.getThirdVideo());
+        if (bandDTO.getThirdVideo() != null) {
+            versionEntity.setThirdVideo(bandDTO.getThirdVideo());
         }
-        if (bean.getFourthVideo() != null) {
-            versionDTO.setFourthVideo(bean.getFourthVideo());
+        if (bandDTO.getFourthVideo() != null) {
+            versionEntity.setFourthVideo(bandDTO.getFourthVideo());
         }
-        if (bean.getFourthVideo() != null) {
-            versionDTO.setFourthVideo(bean.getFourthVideo());
+        if (bandDTO.getFourthVideo() != null) {
+            versionEntity.setFourthVideo(bandDTO.getFourthVideo());
         }
-        if (bean.getUploadedImage() != null) {
-            if (bean.getUploadedImage()) {
-                versionDTO.setUploadedImage(true);
-                versionDTO.setImage(linkPrefix + bandDTO.getId());
+        if (bandDTO.getUploadedImage() != null) {
+            if (bandDTO.getUploadedImage()) {
+                versionEntity.setUploadedImage(true);
+                versionEntity.setImage(linkPrefix + bandEntity.getId());
             } else {
-                versionDTO.setUploadedImage(false);
-                versionDTO.setImage(bean.getImage());
+                versionEntity.setUploadedImage(false);
+                versionEntity.setImage(bandDTO.getImage());
             }
         }
-        versionDTO.setCurrentVersion(true);
-        versionDTO.setCreationDate(new Date());
-        versionDTO.setBand(bandDTO);
-        versionDTO.setUser(userBO.getLoggedUser());
-        return versionDTO;
+        versionEntity.setCurrentVersion(true);
+        versionEntity.setCreationDate(new Date());
+        versionEntity.setBand(bandEntity);
+        versionEntity.setUser(userBO.getLoggedUser());
+        return versionEntity;
     }
 
-    private void setOldVersion(BandDTO bandDTO){
-        BandVersionDTO currentVersion = bandDTO.getCurrentVersion();
+    private void setOldVersion(BandEntity bandEntity){
+        BandVersionEntity currentVersion = bandEntity.getCurrentVersion();
         currentVersion.setCurrentVersion(false);
         bandVersionDAO.persist(currentVersion);
     }

@@ -1,9 +1,9 @@
 package com.antilamer.controller;
 
-import com.antilamer.beans.band.BandBean;
-import com.antilamer.beans.band.BandHistoryBean;
-import com.antilamer.beans.band.BandSearchBean;
-import com.antilamer.beans.common.CommonSearchBean;
+import com.antilamer.dto.band.BandDTO;
+import com.antilamer.dto.band.BandHistoryDTO;
+import com.antilamer.dto.band.BandSearchDTO;
+import com.antilamer.dto.common.CommonSearchDTO;
 import com.antilamer.exeptions.ServerExeption;
 import com.antilamer.service.BandBO;
 import org.apache.log4j.Logger;
@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class BandController {
 
     private static Logger logger = Logger.getLogger(BandController.class);
@@ -28,7 +29,7 @@ public class BandController {
     @RequestMapping(value = "/getBand", method = RequestMethod.POST)
     public
     @ResponseBody
-    BandBean getBand(@RequestBody CommonSearchBean searchBean) {
+    BandDTO getBand(@RequestBody CommonSearchDTO searchBean) {
         logger.info("getBand()");
         if (searchBean != null && searchBean.getId() != null) {
             return bandBO.getBand(searchBean.getId());
@@ -40,7 +41,7 @@ public class BandController {
     public
     @ResponseBody
     @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
-    BandBean getBandVersion(@RequestBody CommonSearchBean searchBean) {
+    BandDTO getBandVersion(@RequestBody CommonSearchDTO searchBean) {
         if (searchBean != null && searchBean.getId() != null) {
             logger.info("getBandVersion() bandId: " + searchBean.getId());
             return bandBO.getBandVersion(searchBean);
@@ -51,7 +52,7 @@ public class BandController {
     @RequestMapping(value = "saveBand", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void saveBand(@RequestBody BandBean bean){
+    public void saveBand(@RequestBody BandDTO bean){
         logger.info("*** saveBand()");
         if (bean != null) {
             bandBO.saveBand(bean);
@@ -63,7 +64,7 @@ public class BandController {
     @RequestMapping(value = "makeVersionCurrent", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void makeVersionCurrent(@RequestBody CommonSearchBean searchBean){
+    public void makeVersionCurrent(@RequestBody CommonSearchDTO searchBean){
         if (searchBean != null) {
             logger.info("*** makeVersionCurrent() for bandId: " + searchBean.getId());
             bandBO.makeVersionCurrent(searchBean);
@@ -76,7 +77,7 @@ public class BandController {
     @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
     public
     @ResponseBody
-    List<BandHistoryBean> seachBandHistory(HttpServletRequest req, @RequestBody BandSearchBean searchBean){
+    List<BandHistoryDTO> seachBandHistory(HttpServletRequest req, @RequestBody BandSearchDTO searchBean){
         logger.info("*** seachBandHistory() ");
         if (searchBean != null){
             return bandBO.seachBandHistory(searchBean);

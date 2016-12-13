@@ -1,8 +1,8 @@
-package com.antilamer.beans.band;
+package com.antilamer.dto.band;
 
 import java.io.Serializable;
 
-public class BandBean implements Serializable {
+public class BandDTO implements Serializable {
     private Long id;
     private String name;
     private String bandContent;

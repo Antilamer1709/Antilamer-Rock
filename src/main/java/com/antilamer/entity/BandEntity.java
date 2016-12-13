@@ -1,4 +1,4 @@
-package com.antilamer.model;
+package com.antilamer.entity;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -9,7 +9,7 @@ import org.hibernate.annotations.Index;
 
 @Entity
 @Table(name = "BANDS")
-public class BandDTO implements Serializable {
+public class BandEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
@@ -21,12 +21,12 @@ public class BandDTO implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CURRENT_VERSION_ID")
     @Index(name = "U_CURRENT_VERSION_ID_IDX")
-    private BandVersionDTO currentVersion;
+    private BandVersionEntity currentVersion;
 
     @OneToMany (mappedBy = "band")
-    private Set<BandVersionDTO> versions;
+    private Set<BandVersionEntity> versions;
 
-    public BandDTO() {
+    public BandEntity() {
     }
 
     public Long getId() {
@@ -45,19 +45,19 @@ public class BandDTO implements Serializable {
         this.name = name;
     }
 
-    public BandVersionDTO getCurrentVersion() {
+    public BandVersionEntity getCurrentVersion() {
         return currentVersion;
     }
 
-    public void setCurrentVersion(BandVersionDTO currentVersion) {
+    public void setCurrentVersion(BandVersionEntity currentVersion) {
         this.currentVersion = currentVersion;
     }
 
-    public Set<BandVersionDTO> getVersions() {
+    public Set<BandVersionEntity> getVersions() {
         return versions;
     }
 
-    public void setVersions(Set<BandVersionDTO> versions) {
+    public void setVersions(Set<BandVersionEntity> versions) {
         this.versions = versions;
     }
 }

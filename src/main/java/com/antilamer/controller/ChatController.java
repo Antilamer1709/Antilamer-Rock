@@ -1,7 +1,7 @@
 package com.antilamer.controller;
 
-import com.antilamer.beans.chat.MessageBean;
-import com.antilamer.beans.chat.OutputMessageBean;
+import com.antilamer.dto.chat.MessageDTO;
+import com.antilamer.dto.chat.OutputMessageDTO;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,7 @@ import java.util.Date;
 public class ChatController {
     @MessageMapping("/chat")
     @SendTo("/topic/message")
-    public OutputMessageBean sendMessage(MessageBean message) {
-        return new OutputMessageBean(message, new Date());
+    public OutputMessageDTO sendMessage(MessageDTO message) {
+        return new OutputMessageDTO(message, new Date());
     }
 }

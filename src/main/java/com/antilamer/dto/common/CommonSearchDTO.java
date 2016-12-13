@@ -1,9 +1,9 @@
-package com.antilamer.beans.common;
+package com.antilamer.dto.common;
 
 import java.io.Serializable;
 
 
-public class CommonSearchBean implements Serializable {
+public class CommonSearchDTO implements Serializable {
 
     private Long id;
     private Long versionId;

@@ -1,6 +1,4 @@
-package com.antilamer.model;
-
-import org.hibernate.annotations.*;
+package com.antilamer.entity;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -12,7 +10,7 @@ import org.hibernate.annotations.Index;
 
 @Entity
 @Table(name = "BAND_VERSION")
-public class BandVersionDTO implements Serializable{
+public class BandVersionEntity implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,14 +50,14 @@ public class BandVersionDTO implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BAND_ID")
     @Index(name = "BV_BAND_ID_IDX")
-    private BandDTO band;
+    private BandEntity band;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     @Index(name = "BV_USER_ID_IDX")
-    private UserDTO user;
+    private UserEntity user;
 
-    public BandVersionDTO() {
+    public BandVersionEntity() {
     }
 
     public Long getId() {
@@ -142,11 +140,11 @@ public class BandVersionDTO implements Serializable{
         this.uploadedImage = uploadedImage;
     }
 
-    public BandDTO getBand() {
+    public BandEntity getBand() {
         return band;
     }
 
-    public void setBand(BandDTO band) {
+    public void setBand(BandEntity band) {
         this.band = band;
     }
 
@@ -158,11 +156,11 @@ public class BandVersionDTO implements Serializable{
         this.creationDate = creationDate;
     }
 
-    public UserDTO getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(UserDTO user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 }

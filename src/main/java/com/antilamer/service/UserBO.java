@@ -1,23 +1,23 @@
 package com.antilamer.service;
 
-import com.antilamer.beans.user.LoggedUserBean;
-import com.antilamer.beans.user.UserLoginBean;
-import com.antilamer.beans.user.UserRegistrationBean;
+import com.antilamer.dto.user.LoggedUserDTO;
+import com.antilamer.dto.user.UserLoginDTO;
+import com.antilamer.dto.user.UserRegistrationDTO;
+import com.antilamer.entity.UserEntity;
 import com.antilamer.exeptions.ValidationExeption;
-import com.antilamer.model.UserDTO;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface UserBO {
-    void registerUser(UserRegistrationBean userRegistrationBean) throws ValidationExeption;
+    void registerUser(UserRegistrationDTO userRegistrationDTO) throws ValidationExeption;
 
-    ResponseEntity<?> login(UserLoginBean loginBean, HttpServletRequest req) throws Exception;
+    ResponseEntity<?> login(UserLoginDTO loginDTO, HttpServletRequest req) throws Exception;
 
-    LoggedUserBean currentUser();
+    LoggedUserDTO currentUser();
 
-    UserDTO getLoggedUser();
+    UserEntity getLoggedUser();
 
     String logout(HttpServletRequest request, HttpServletResponse response);
 }

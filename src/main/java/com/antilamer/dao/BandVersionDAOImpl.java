@@ -1,7 +1,7 @@
 package com.antilamer.dao;
 
-import com.antilamer.beans.band.BandSearchBean;
-import com.antilamer.model.BandVersionDTO;
+import com.antilamer.dto.band.BandSearchDTO;
+import com.antilamer.entity.BandVersionEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,34 +10,22 @@ import java.util.*;
 
 @Transactional
 @Repository
-public class BandVersionDAOImpl extends AbstractJpaDAOImpl<BandVersionDTO> implements BandVersionDAO {
+public class BandVersionDAOImpl extends AbstractJpaDAOImpl<BandVersionEntity> implements BandVersionDAO {
 
     @Override
-    public List<BandVersionDTO> findAllById(BandSearchBean searchBean) {
-//        String sql =
-//                "select v"
-//                        + " from BandVersionDTO v"
-//                        + " where v.bandId = :bandId";
-//
-//        Query query = entityManager.createQuery(sql);
-//        query.setParameter("username", username);
-//        List<UserDTO> result = query.getResultList();
-//        if(result != null && !result.isEmpty()) {
-//            return result.get(0);
-//        }
-//        return null;
-        Query query = makeBandHistoryQuery(searchBean);
-        List<BandVersionDTO> result = query.getResultList();
+    public List<BandVersionEntity> findAllById(BandSearchDTO searhDTO) {
+        Query query = makeBandHistoryQuery(searhDTO);
+        List<BandVersionEntity> result = query.getResultList();
         if (result != null && !result.isEmpty()) {
             return result;
         }
         return null;
     }
 
-    private Query makeBandHistoryQuery(BandSearchBean searchBean) {
+    private Query makeBandHistoryQuery(BandSearchDTO searchBean) {
         StringBuilder jpaTemplateBuilder = new StringBuilder(
                 "select v"
-                        + " from BandVersionDTO v " +
+                        + " from BandVersionEntity v " +
                         " left outer join v.band band "
         );
         Map<String, Object> params = new TreeMap<String, Object>();
@@ -54,7 +42,7 @@ public class BandVersionDAOImpl extends AbstractJpaDAOImpl<BandVersionDTO> imple
         return query;
     }
 
-    private void initBandHistoryFilter(BandSearchBean searchBean, StringBuilder jpaTemplateBuilder, Map<String, Object> params) {
+    private void initBandHistoryFilter(BandSearchDTO searchBean, StringBuilder jpaTemplateBuilder, Map<String, Object> params) {
         if (searchBean != null) {
             if (searchBean.getId() != null) {
                 jpaTemplateBuilder.append(" and band.id = :bandId ");

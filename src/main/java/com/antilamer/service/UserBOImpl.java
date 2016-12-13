@@ -1,13 +1,13 @@
 package com.antilamer.service;
 
-import com.antilamer.beans.user.LoggedUserBean;
-import com.antilamer.beans.user.UserLoginBean;
-import com.antilamer.beans.user.UserRegistrationBean;
+import com.antilamer.dto.user.LoggedUserDTO;
+import com.antilamer.dto.user.UserLoginDTO;
+import com.antilamer.dto.user.UserRegistrationDTO;
 import com.antilamer.dao.RoleDAO;
 import com.antilamer.dao.UserDAO;
+import com.antilamer.entity.UserEntity;
 import com.antilamer.exeptions.ValidationExeption;
-import com.antilamer.model.RoleDTO;
-import com.antilamer.model.UserDTO;
+import com.antilamer.entity.RoleEntity;
 import com.antilamer.utils.Constants;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,24 +47,24 @@ public class UserBOImpl implements UserBO{
 
     @Override
     @Transactional
-    public void registerUser(UserRegistrationBean userRegistrationBean) throws ValidationExeption {
+    public void registerUser(UserRegistrationDTO userRegistrationDTO) throws ValidationExeption {
         logger.info("*** registerUser() start");
-        validateUserRegistration(userRegistrationBean);
-        UserDTO userDTO = new UserDTO();
-        initUserDTO(userDTO, userRegistrationBean);
-        userDAO.persist(userDTO);
+        validateUserRegistration(userRegistrationDTO);
+        UserEntity userEntity = new UserEntity();
+        initUserEntity(userEntity, userRegistrationDTO);
+        userDAO.persist(userEntity);
         logger.info("*** registerUser() end");
     }
 
     @Override
     @Transactional
-    public ResponseEntity<?> login(UserLoginBean loginBean, HttpServletRequest req) throws Exception {
+    public ResponseEntity<?> login(UserLoginDTO loginDTO, HttpServletRequest req) throws Exception {
         logger.info("*** login() start");
-        UserDTO userDTO = userDAO.getByUsername(loginBean.getUsername().toLowerCase());
-        if (userDTO != null && passwordEncoder.matches(loginBean.getPassword(), userDTO.getPassword())) {
+        UserEntity userEntity = userDAO.getByUsername(loginDTO.getUsername().toLowerCase());
+        if (userEntity != null && passwordEncoder.matches(loginDTO.getPassword(), userEntity.getPassword())) {
             try {
-                Authentication token = new UsernamePasswordAuthenticationToken(userDTO.getUsername(),
-                        passwordEncoder.encode(loginBean.getPassword()));
+                Authentication token = new UsernamePasswordAuthenticationToken(userEntity.getUsername(),
+                        passwordEncoder.encode(loginDTO.getPassword()));
                 Authentication auth = authenticationManager.authenticate(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
                 logger.info("*** login() end for: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
@@ -78,19 +78,19 @@ public class UserBOImpl implements UserBO{
     }
 
     @Override
-    public LoggedUserBean currentUser() {
+    public LoggedUserDTO currentUser() {
         logger.info("*** currentUser() start");
-        LoggedUserBean userBean = new LoggedUserBean();
-        userBean.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-        userBean.setLogged(!checkAnonymous(SecurityContextHolder.getContext().getAuthentication().getAuthorities()));
-        userBean.setRole(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0].toString());
+        LoggedUserDTO userDTO = new LoggedUserDTO();
+        userDTO.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        userDTO.setLogged(!checkAnonymous(SecurityContextHolder.getContext().getAuthentication().getAuthorities()));
+        userDTO.setRole(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0].toString());
         logger.info("*** currentUser() end for " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         logger.info(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
-        return userBean;
+        return userDTO;
     }
 
     @Override
-    public UserDTO getLoggedUser() {
+    public UserEntity getLoggedUser() {
         return userDAO.getByUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
     }
 
@@ -103,35 +103,35 @@ public class UserBOImpl implements UserBO{
         return "redirect:/";
     }
 
-    private void validateUserRegistration(UserRegistrationBean bean){
-        UserDTO userDTO;
-        if (bean.getUsername() != null){
-            userDTO = userDAO.getByUsername(bean.getUsername());
-            if (userDTO != null && userDTO.getUsername() != null){
+    private void validateUserRegistration(UserRegistrationDTO registrationDTO){
+        UserEntity userEntity;
+        if (registrationDTO.getUsername() != null){
+            userEntity = userDAO.getByUsername(registrationDTO.getUsername());
+            if (userEntity != null && userEntity.getUsername() != null){
                 throw new ValidationExeption("User with this username is already exist!");
             }
         }
-        if (bean.getUsername() != null){
-            userDTO = userDAO.getByEmail(bean.getEmail());
-            if (userDTO != null && userDTO.getEmail() != null){
+        if (registrationDTO.getUsername() != null){
+            userEntity = userDAO.getByEmail(registrationDTO.getEmail());
+            if (userEntity != null && userEntity.getEmail() != null){
                 throw new ValidationExeption("User with this email is already exist!");
             }
         }
-        if (bean.getEmail() == null){
+        if (registrationDTO.getEmail() == null){
             throw new ValidationExeption("Please, enter correct email!");
         }
-        if (!bean.getPassword().equals(bean.getConfirmPassword())){
+        if (!registrationDTO.getPassword().equals(registrationDTO.getConfirmPassword())){
             throw new ValidationExeption("Passwords are not matching!");
         }
     }
 
-    private void initUserDTO(UserDTO userDTO, UserRegistrationBean bean){
-        userDTO.setUsername(bean.getUsername());
-        userDTO.setEmail(bean.getEmail());
-        userDTO.setPassword(passwordEncoder.encode(bean.getPassword()));
-        userDTO.setRegistrationDate(new Date());
-        RoleDTO role = roleDAO.findById(1l);//Now user can get only USER role with id 1
-        userDTO.setRole(role);
+    private void initUserEntity(UserEntity userEntity, UserRegistrationDTO registrationDTO){
+        userEntity.setUsername(registrationDTO.getUsername());
+        userEntity.setEmail(registrationDTO.getEmail());
+        userEntity.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
+        userEntity.setRegistrationDate(new Date());
+        RoleEntity role = roleDAO.findById(1l);//Now user can get only USER role with id 1
+        userEntity.setRole(role);
     }
 
     private boolean checkAnonymous(Collection<? extends GrantedAuthority> authorities){
