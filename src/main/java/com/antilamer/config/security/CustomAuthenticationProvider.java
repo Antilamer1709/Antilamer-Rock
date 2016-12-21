@@ -20,27 +20,29 @@ import java.util.List;
 
 
 @Component
-public class CustomAuthenticationProvider implements AuthenticationProvider {
-
-    @Autowired
-    UserDAO userDAO;
-
+public class CustomAuthenticationProvider
+//        implements AuthenticationProvider
+{
+//
+//    @Autowired
+//    UserDAO userDAO;
+//
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        List<GrantedAuthority> grantedAuths = new ArrayList<>();
-        UserEntity userDTO = userDAO.getByUsername(authentication.getPrincipal().toString());
-        grantedAuths.add(new SimpleGrantedAuthority(Constants.ROLE_PREFIX + userDTO.getRole().getRole()));
-        return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(), grantedAuths);
-    }
-
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
-    }
+//
+//    @Override
+//    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+//        List<GrantedAuthority> grantedAuths = new ArrayList<>();
+//        UserEntity userDTO = userDAO.getByUsername(authentication.getPrincipal().toString());
+//        grantedAuths.add(new SimpleGrantedAuthority(Constants.ROLE_PREFIX + userDTO.getRole().getRole()));
+//        return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials(), grantedAuths);
+//    }
+//
+//    @Override
+//    public boolean supports(Class<?> authentication) {
+//        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
+//    }
 
 }

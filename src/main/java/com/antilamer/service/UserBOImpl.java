@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -25,8 +26,10 @@ import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Service(value = "userBO")
 public class UserBOImpl implements UserBO{
@@ -63,8 +66,11 @@ public class UserBOImpl implements UserBO{
         UserEntity userEntity = userDAO.getByUsername(loginDTO.getUsername().toLowerCase());
         if (userEntity != null && passwordEncoder.matches(loginDTO.getPassword(), userEntity.getPassword())) {
             try {
+                SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userEntity.getRole().getRole());
+                List<GrantedAuthority> authorities = new ArrayList<>();
+                authorities.add(authority);
                 Authentication token = new UsernamePasswordAuthenticationToken(userEntity.getUsername(),
-                        passwordEncoder.encode(loginDTO.getPassword()));
+                        passwordEncoder.encode(loginDTO.getPassword()), authorities);
                 Authentication auth = authenticationManager.authenticate(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
                 logger.info("*** login() end for: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
@@ -81,7 +87,7 @@ public class UserBOImpl implements UserBO{
     public LoggedUserDTO currentUser() {
         logger.info("*** currentUser() start");
         LoggedUserDTO userDTO = new LoggedUserDTO();
-        userDTO.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        userDTO.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         userDTO.setLogged(!checkAnonymous(SecurityContextHolder.getContext().getAuthentication().getAuthorities()));
         userDTO.setRole(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0].toString());
         logger.info("*** currentUser() end for " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());

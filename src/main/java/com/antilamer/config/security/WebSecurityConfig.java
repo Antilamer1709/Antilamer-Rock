@@ -8,20 +8,33 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+//
+//    @Autowired
+//    private CustomAuthenticationProvider customAuthenticationProvider;
+//
+//    @Autowired
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .authenticationProvider(this.customAuthenticationProvider);
+//    }
 
     @Autowired
-    private CustomAuthenticationProvider customAuthenticationProvider;
+    DataSource dataSource;
 
     @Autowired
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .authenticationProvider(this.customAuthenticationProvider);
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery(
+                        "select username,password,role_id from USERS where username=?")
+                .authoritiesByUsernameQuery(
+                        "SELECT USERS.username, ROLES.role FROM USERS JOIN ROLES ON ROLES.id = USERS.role_id where username=?");
     }
 
     @Override
@@ -34,7 +47,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
+                    .loginPage("/")
                     .loginProcessingUrl("/user/login/")
+                    .usernameParameter("username").passwordParameter("password")
                     .permitAll()
                 .and()
                     .logout()
