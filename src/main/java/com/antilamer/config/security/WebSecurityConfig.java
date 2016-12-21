@@ -30,15 +30,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().disable();
         http
                 .authorizeRequests()
-                .antMatchers(Constants.RESOURCES_PERMISSION_ALL).permitAll()
-                .anyRequest().authenticated()
+                    .antMatchers(Constants.RESOURCES_PERMISSION_ALL).permitAll()
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginProcessingUrl("/user/login/")
-                .permitAll()
+                    .formLogin()
+                    .loginProcessingUrl("/user/login/")
+                    .permitAll()
                 .and()
-                .logout()
-                .permitAll();
+                    .logout()
+                    .permitAll();
     }
 
 }
