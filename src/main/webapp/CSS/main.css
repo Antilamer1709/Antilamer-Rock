@@ -51,6 +51,11 @@ h1{
     clear: both;
 }
 
+.center {
+    margin: auto;
+    width: 1050px;
+}
+
 #downBar{
     background-color: #565454;
     width: 100%;
