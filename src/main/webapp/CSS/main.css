@@ -59,6 +59,7 @@ h1{
 #downBar{
     background-color: #565454;
     width: 100%;
+    min-width: 1120px;
     height: 80px;
     color: #c9c3c3;
     font-family: "Comic Sans MS", cursive, sans-serif;
