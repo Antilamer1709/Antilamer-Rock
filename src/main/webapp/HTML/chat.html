@@ -10,7 +10,7 @@
     </form>
     <hr/>
     <p ng-repeat="message in messages | orderBy:'time':true" class="message">
-        <time>{{message.time | date:'HH:mm'}}</time>
+        <time>{{message.time | date:'HH:mm'}} <b>{{message.user}}</b>:</time>
         <span ng-class="{self: message.self}">{{message.message}}</span>
     </p>
 </div>

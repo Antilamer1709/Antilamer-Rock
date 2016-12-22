@@ -34,6 +34,7 @@ angular.module('mvcApp').factory('ChatService', ['$http', '$rootScope', '$q', '$
     var getMessage = function(data) {
         var message = JSON.parse(data), out = {};
         out.message = message.message;
+        out.user = message.user;
         out.time = new Date(message.time);
         if (_.contains(messageIds, message.id)) {
             out.self = true;
