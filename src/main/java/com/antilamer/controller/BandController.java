@@ -29,10 +29,10 @@ public class BandController {
     @RequestMapping(value = "/getBand", method = RequestMethod.POST)
     public
     @ResponseBody
-    BandDTO getBand(@RequestBody CommonSearchDTO searchBean) {
+    BandDTO getBand(@RequestBody CommonSearchDTO searchDTO) {
         logger.info("getBand()");
-        if (searchBean != null && searchBean.getId() != null) {
-            return bandBO.getBand(searchBean.getId());
+        if (searchDTO != null && searchDTO.getId() != null) {
+            return bandBO.getBand(searchDTO.getId());
         }
         throw new ServerExeption("Server internal error, please contact to developer");
     }
@@ -41,10 +41,10 @@ public class BandController {
     public
     @ResponseBody
     @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
-    BandDTO getBandVersion(@RequestBody CommonSearchDTO searchBean) {
-        if (searchBean != null && searchBean.getId() != null) {
-            logger.info("getBandVersion() bandId: " + searchBean.getId());
-            return bandBO.getBandVersion(searchBean);
+    BandDTO getBandVersion(@RequestBody CommonSearchDTO searchDTO) {
+        if (searchDTO != null && searchDTO.getId() != null) {
+            logger.info("getBandVersion() bandId: " + searchDTO.getId());
+            return bandBO.getBandVersion(searchDTO);
         }
         throw new ServerExeption("Server internal error, please contact to developer");
     }
@@ -52,10 +52,10 @@ public class BandController {
     @RequestMapping(value = "saveBand", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void saveBand(@RequestBody BandDTO bean){
+    public void saveBand(@RequestBody BandDTO searchDTO){
         logger.info("*** saveBand()");
-        if (bean != null) {
-            bandBO.saveBand(bean);
+        if (searchDTO != null) {
+            bandBO.saveBand(searchDTO);
             return;
         }
         throw new ServerExeption("Server internal error, please contact to developer. Band is not saved!");
@@ -64,10 +64,10 @@ public class BandController {
     @RequestMapping(value = "makeVersionCurrent", method = RequestMethod.POST)
     @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
     @ResponseStatus(value = HttpStatus.OK)
-    public void makeVersionCurrent(@RequestBody CommonSearchDTO searchBean){
-        if (searchBean != null) {
-            logger.info("*** makeVersionCurrent() for bandId: " + searchBean.getId());
-            bandBO.makeVersionCurrent(searchBean);
+    public void makeVersionCurrent(@RequestBody CommonSearchDTO searchDTO){
+        if (searchDTO != null) {
+            logger.info("*** makeVersionCurrent() for bandId: " + searchDTO.getId());
+            bandBO.makeVersionCurrent(searchDTO);
             return;
         }
         throw new ServerExeption("Server internal error, please contact to developer. Band is not saved!");
@@ -77,10 +77,10 @@ public class BandController {
     @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN"})
     public
     @ResponseBody
-    List<BandHistoryDTO> seachBandHistory(HttpServletRequest req, @RequestBody BandSearchDTO searchBean){
+    List<BandHistoryDTO> seachBandHistory(HttpServletRequest req, @RequestBody BandSearchDTO searchDTO){
         logger.info("*** seachBandHistory() ");
-        if (searchBean != null){
-            return bandBO.seachBandHistory(searchBean);
+        if (searchDTO != null){
+            return bandBO.seachBandHistory(searchDTO);
         }
         return null;
     }

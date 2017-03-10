@@ -26,20 +26,20 @@ public class UserController {
 
     @RequestMapping(value = "registerUser", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
-    public void registerUser(@RequestBody UserRegistrationDTO registrationBean) throws ValidationExeption {
+    public void registerUser(@RequestBody UserRegistrationDTO registrationDTO) throws ValidationExeption {
         logger.info("*** registerUser()");
-        if (registrationBean != null) {
-            userBO.registerUser(registrationBean);
+        if (registrationDTO != null) {
+            userBO.registerUser(registrationDTO);
             return;
         }
         throw new ServerExeption("Server internal error, please contact to developer");
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ResponseEntity<?> login(@RequestBody UserLoginDTO loginBean, HttpServletRequest req) throws Exception {
+    public ResponseEntity<?> login(@RequestBody UserLoginDTO loginDTO, HttpServletRequest req) throws Exception {
         logger.info("*** loginBean()");
-        if (loginBean != null) {
-            return userBO.login(loginBean, req);
+        if (loginDTO != null) {
+            return userBO.login(loginDTO, req);
         }
         throw new ServerExeption("Server internal error, please contact to developer");
     }
@@ -47,7 +47,7 @@ public class UserController {
     @RequestMapping(value = "currentUser", method = RequestMethod.POST)
     public
     @ResponseBody
-    LoggedUserDTO login(HttpServletRequest req) throws Exception {
+    LoggedUserDTO currentUser(HttpServletRequest req) throws Exception {
         logger.info("*** currentUser()");
         return userBO.currentUser();
     }
