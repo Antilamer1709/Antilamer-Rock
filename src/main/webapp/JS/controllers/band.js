@@ -5,6 +5,7 @@ angular.module('mvcApp').controller('BandCtrl', ['$scope', '$rootScope', '$route
     $rootScope.home = false;
     $rootScope.bands = true;
     $rootScope.chat = false;
+    $rootScope.stringConverter = false;
 
 
 

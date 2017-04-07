@@ -348,3 +348,12 @@ ul.dropdown-lr {
     border-left: solid 1px #F1F1F1;
     padding-bottom: .5em;
 }
+
+.imageConverter{
+    height: 400px;
+}
+
+.convertTextArea{
+    width: 900px;
+    height: 120px !important;
+}

@@ -2,6 +2,7 @@ angular.module('mvcApp').controller('ChatCtrl', ['$scope', '$rootScope', 'ChatSe
 
     $rootScope.home = false;
     $rootScope.bands = false;
+    $rootScope.stringConverter = false;
     $rootScope.chat = true;
 
     $scope.messages = [];
