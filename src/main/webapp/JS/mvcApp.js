@@ -14,6 +14,7 @@ angular.module('mvcApp', [
             .when('/index', 'index')
             .when('/chat', 'chat')
             .when('/stringConverter', 'stringConverter')
+            .when('/encoder', 'encoder')
             .when('/band/:bandId', 'band')
             .when('/band/edit/:bandId', 'editBand')
             .when('/band/history/:bandId', 'bandHistory')
@@ -32,6 +33,11 @@ angular.module('mvcApp', [
         $routeSegmentProvider.segment('stringConverter', {
             templateUrl: 'HTML/stringConverter.html',
             controller: 'StringConverterCtrl'
+        });
+
+        $routeSegmentProvider.segment('encoder', {
+            templateUrl: 'HTML/encoder.html',
+            controller: 'EncoderCtrl'
         });
 
         $routeSegmentProvider.segment('band', {

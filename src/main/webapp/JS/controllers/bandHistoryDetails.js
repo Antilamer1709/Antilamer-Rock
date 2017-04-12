@@ -5,7 +5,6 @@ angular.module('mvcApp').controller('BandHistoryDetails', ['$scope', '$rootScope
     $scope.band;
     $rootScope.home = false;
     $rootScope.bands = true;
-    $rootScope.stringConverter = false;
     $rootScope.chat = false;
 
 

@@ -4,7 +4,6 @@ angular.module('mvcApp').controller('StringConverterCtrl', ['$scope', '$rootScop
     $rootScope.bands = false;
     $rootScope.chat = false;
     $rootScope.chat = false;
-    $rootScope.stringConverter = true;
 
 
     $scope.$watch('stringToConvert', function (stringToConvert) {
