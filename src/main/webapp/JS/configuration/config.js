@@ -11,7 +11,7 @@ angular.module('mvcApp')
         "a","s","d","f","g","h","j","k","l",";","'",
         "z","x","c","v","b","n","m",",","\\."])
     .config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push(['$q', '$location', '$injector', '$rootScope', function ($q, $location, $injector, $rootScope) {
+        $httpProvider.interceptors.push(['$q', '$location', '$injector', '$window', '$rootScope', function ($q, $location, $injector, $window, $rootScope) {
             return {
                 'responseError': function (response) {
                     var error = response.data;
@@ -20,7 +20,7 @@ angular.module('mvcApp')
                         cmnSrv.showToast('danger', response.data.message)
                     }
                     if (response.status == 403) {
-                        cmnSrv.showToast('danger', 'Unauthorized access')
+                        $window.location.href = '/#/';
                     }
                     return $q.reject(response);
                 }

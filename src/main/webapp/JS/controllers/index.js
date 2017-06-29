@@ -54,6 +54,6 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
         }, function (err) {
             $rootScope.error = err;
         })
-    }
+    };
     $scope.getLoggerUser();
 }]);
