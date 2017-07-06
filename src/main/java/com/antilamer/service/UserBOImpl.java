@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -86,7 +87,20 @@ public class UserBOImpl implements UserBO{
         userDTO.setRole(SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0].toString());
         logger.info("*** currentUser() end for " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         logger.info(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+        logger.info("*** isRememberMeAuthenticated() " + isRememberMeAuthenticated() + " ***");
+
         return userDTO;
+    }
+
+    private boolean isRememberMeAuthenticated() {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return false;
+        }
+
+        return RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
     }
 
     @Override
