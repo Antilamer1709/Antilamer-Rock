@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 public interface UserBO {
     void registerUser(UserRegistrationDTO userRegistrationDTO) throws ValidationExeption;
 
-    ResponseEntity<?> login(UserLoginDTO loginDTO, HttpServletRequest req) throws Exception;
+    ResponseEntity<?> login(UserLoginDTO loginDTO, HttpServletResponse response) throws Exception;
 
-    LoggedUserDTO currentUser();
+    LoggedUserDTO currentUser(HttpServletRequest request);
 
     UserEntity getLoggedUser();
 

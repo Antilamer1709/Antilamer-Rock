@@ -6,7 +6,7 @@ public class UserLoginDTO implements Serializable {
     private Long id;
     private String username;
     private String password;
-    private Boolean remember;
+    private Boolean rememberMe;
 
     public Long getId() {
         return id;
@@ -32,11 +32,11 @@ public class UserLoginDTO implements Serializable {
         this.password = password;
     }
 
-    public Boolean getRemember() {
-        return remember;
+    public Boolean getRememberMe() {
+        return rememberMe;
     }
 
-    public void setRemember(Boolean remember) {
-        this.remember = remember;
+    public void setRememberMe(Boolean rememberMe) {
+        this.rememberMe = rememberMe;
     }
 }

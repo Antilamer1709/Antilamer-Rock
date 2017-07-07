@@ -36,10 +36,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ResponseEntity<?> login(@RequestBody UserLoginDTO loginDTO, HttpServletRequest req) throws Exception {
+    public ResponseEntity<?> login(@RequestBody UserLoginDTO loginDTO, HttpServletResponse response) throws Exception {
         logger.info("*** loginBean()");
         if (loginDTO != null) {
-            return userBO.login(loginDTO, req);
+            return userBO.login(loginDTO, response);
         }
         throw new ServerExeption("Server internal error, please contact to developer");
     }
@@ -47,9 +47,9 @@ public class UserController {
     @RequestMapping(value = "currentUser", method = RequestMethod.POST)
     public
     @ResponseBody
-    LoggedUserDTO currentUser(HttpServletRequest req) throws Exception {
+    LoggedUserDTO currentUser(HttpServletRequest request) throws Exception {
         logger.info("*** currentUser()");
-        return userBO.currentUser();
+        return userBO.currentUser(request);
     }
 
     @RequestMapping(value="logout", method = RequestMethod.GET)

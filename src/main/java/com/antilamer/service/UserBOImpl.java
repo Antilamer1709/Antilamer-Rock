@@ -1,16 +1,19 @@
 package com.antilamer.service;
 
+import com.antilamer.dao.RememberMeDAO;
 import com.antilamer.dto.user.LoggedUserDTO;
 import com.antilamer.dto.user.UserLoginDTO;
 import com.antilamer.dto.user.UserRegistrationDTO;
 import com.antilamer.dao.RoleDAO;
 import com.antilamer.dao.UserDAO;
+import com.antilamer.entity.RememberMeEntity;
 import com.antilamer.entity.UserEntity;
 import com.antilamer.exeptions.ValidationExeption;
 import com.antilamer.entity.RoleEntity;
 import com.antilamer.utils.Constants;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,6 +26,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
@@ -45,6 +49,12 @@ public class UserBOImpl implements UserBO{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private RememberMeDAO rememberMeDAO;
+
+    @Value("${token.valid.days}")
+    private Integer tokenValidDays;
+
     @Override
     @Transactional
     public void registerUser(UserRegistrationDTO userRegistrationDTO) throws ValidationExeption {
@@ -58,7 +68,7 @@ public class UserBOImpl implements UserBO{
 
     @Override
     @Transactional
-    public ResponseEntity<?> login(UserLoginDTO loginDTO, HttpServletRequest req) throws Exception {
+    public ResponseEntity<?> login(UserLoginDTO loginDTO,  HttpServletResponse response) throws Exception {
         logger.info("*** login() start");
         UserEntity userEntity = userDAO.getByUsername(loginDTO.getUsername().toLowerCase());
         if (userEntity != null && passwordEncoder.matches(loginDTO.getPassword(), userEntity.getPassword())) {
@@ -69,6 +79,10 @@ public class UserBOImpl implements UserBO{
                 SecurityContextHolder.getContext().setAuthentication(auth);
                 logger.info("*** login() end for: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
                 logger.info(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+                logger.info("*** is rememberMe: " + loginDTO.getRememberMe());
+                if (loginDTO.getRememberMe() != null && loginDTO.getRememberMe()){
+                    rememberMe(loginDTO, response);
+                }
                 return new ResponseEntity<>(token, HttpStatus.OK);
             } catch (Exception ex) {
                 return new ResponseEntity<>(String.format("{\"error\": \"%s\"}", ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -78,8 +92,10 @@ public class UserBOImpl implements UserBO{
     }
 
     @Override
-    public LoggedUserDTO currentUser() {
+    @Transactional
+    public LoggedUserDTO currentUser(HttpServletRequest request) {
         logger.info("*** currentUser() start");
+        checkRememberMe(request);
         LoggedUserDTO userDTO = new LoggedUserDTO();
         userDTO.setUsername(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
         userDTO.setLogged(!checkAnonymous(SecurityContextHolder.getContext().getAuthentication().getAuthorities()));
@@ -95,9 +111,11 @@ public class UserBOImpl implements UserBO{
     }
 
     @Override
+    @Transactional
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
+            deleteRememberMe();
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/";
@@ -141,6 +159,100 @@ public class UserBOImpl implements UserBO{
             }
         }
         return false;
+    }
+
+    private void rememberMe(UserLoginDTO loginDTO, HttpServletResponse response){
+        RememberMeEntity rememberMeEntity = rememberMeDAO.findByLogin(loginDTO.getUsername());
+        if (rememberMeEntity != null) {
+            refreshCreationDate(rememberMeEntity);
+        } else {
+            saveUserData(loginDTO, response);
+        }
+    }
+
+    private void saveUserData(UserLoginDTO loginDTO, HttpServletResponse response){
+        logger.info("*** saveUserData() start");
+        RememberMeEntity rememberMeEntity = new RememberMeEntity();
+        initRememberMeEntity(rememberMeEntity, loginDTO);
+        rememberMeDAO.persist(rememberMeEntity);
+        Cookie cookie = new Cookie("rememberMeToken", rememberMeEntity.getToken());
+        cookie.setMaxAge(tokenValidDays * 86400);  //86400 == 24 * 60 * 60
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        logger.info("*** saveUserData() end, user token: " + rememberMeEntity.getToken());
+    }
+
+    private void initRememberMeEntity(RememberMeEntity rememberMeEntity, UserLoginDTO loginDTO){
+        Date creationDate = new Date();
+        rememberMeEntity.setLogin(loginDTO.getUsername());
+        rememberMeEntity.setEncodedPassword(passwordEncoder.encode(loginDTO.getPassword()));
+        rememberMeEntity.setToken(passwordEncoder.encode(creationDate.toString()));
+        rememberMeEntity.setCreationDate(creationDate);
+    }
+
+    private void checkRememberMe(HttpServletRequest request){
+        logger.info("*** checkRememberMe()");
+        String rememberMeToken = getRememberMeToken(request);
+        UserEntity userEntity = getLoggedUser();
+        logger.info("*** checkRememberMe(), start for token: " + rememberMeToken);
+        if (rememberMeToken != null && userEntity == null) {
+            RememberMeEntity rememberMeEntity = rememberMeDAO.findByToken(rememberMeToken);
+            if (isRememberMeEntityValid(rememberMeEntity)){
+                authenticateUser(rememberMeEntity.getLogin(), rememberMeEntity.getEncodedPassword());
+                refreshCreationDate(rememberMeEntity);
+            }
+        }
+    }
+
+    private String getRememberMeToken(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null){
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("rememberMeToken")){
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
+    private void refreshCreationDate(RememberMeEntity rememberMeEntity) {
+        logger.info("*** refreshCreationDate(), token will be persist with new date");
+        rememberMeEntity.setCreationDate(new Date());
+        rememberMeDAO.persist(rememberMeEntity);
+    }
+
+    private boolean isRememberMeEntityValid(RememberMeEntity rememberMeEntity){
+        if (rememberMeEntity != null) {
+            Date now = new Date();
+            //86400000 == 1000 * 60 * 60 * 24
+            long daysFromCreation = (now.getTime() - rememberMeEntity.getCreationDate().getTime()) / 86400000;
+            if (daysFromCreation < tokenValidDays){
+                logger.info("*** isRememberMeEntityValid(), token is valid, days from creation: " + daysFromCreation);
+                return true;
+            } else {
+                logger.info("*** isRememberMeEntityValid(), token is not valid, days from creation: " + daysFromCreation);
+                return false;
+            }
+        } else {
+            logger.info("*** isRememberMeEntityValid(), entity is null!");
+            return false;
+        }
+    }
+
+    private void authenticateUser(String login, String encodedPassword) {
+        Authentication token = new UsernamePasswordAuthenticationToken(login, encodedPassword);
+        Authentication auth = authenticationManager.authenticate(token);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+    }
+
+    private void deleteRememberMe(){
+        UserEntity userEntity = getLoggedUser();
+        logger.info("*** deleteRememberMe(), for userName: " + userEntity.getUsername());
+        RememberMeEntity rememberMeEntity = rememberMeDAO.findByLogin(userEntity.getUsername());
+        if (rememberMeEntity != null){
+            rememberMeDAO.deleteById(rememberMeEntity.getId());
+        }
     }
 
 }
