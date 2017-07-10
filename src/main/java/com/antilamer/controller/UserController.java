@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,5 +57,12 @@ public class UserController {
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
         logger.info("*** logout()");
         return userBO.logout(request, response);
+    }
+
+    @RequestMapping(value = "restorePassword", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void registerUser(@RequestBody String username) throws MessagingException {
+        logger.info("*** restorePassword() for username: " + username);
+        userBO.restoreUserPassword(username);
     }
 }

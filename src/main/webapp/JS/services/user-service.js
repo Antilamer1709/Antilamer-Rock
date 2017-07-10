@@ -21,6 +21,13 @@ angular.module('mvcApp').factory('UserService', ['$http', '$rootScope', function
             }).error(function (err) {
                 error(err);
             });
+        },
+        forgotPassword: function (params, success, error) {
+            $http.post('user/restorePassword', params).success(function (res) {
+                success(res);
+            }).error(function (err) {
+                error(err);
+            });
         }
     }
 }]);

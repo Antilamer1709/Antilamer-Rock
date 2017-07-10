@@ -26,9 +26,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
+import javax.mail.Address;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.Date;
 
@@ -51,6 +56,9 @@ public class UserBOImpl implements UserBO{
 
     @Autowired
     private RememberMeDAO rememberMeDAO;
+
+    @Autowired
+    private MailBO mailBO;
 
     @Value("${token.valid.days}")
     private Integer tokenValidDays;
@@ -115,10 +123,26 @@ public class UserBOImpl implements UserBO{
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
-            deleteRememberMe();
+            deleteRememberMe(getLoggedUser());
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/";
+    }
+
+    @Override
+    @Transactional
+    public void restoreUserPassword(String login) throws MessagingException {
+        UserEntity userEntity = userDAO.getByUsername(login);
+        if (userEntity != null){
+            Address[] addresses = InternetAddress.parse(userEntity.getEmail());
+            String newPassword = generateNewPassword();
+            persistNewPassword(userEntity, newPassword);
+            deleteRememberMe(userEntity);
+            String text = Constants.MAIL_RESTORE_PASS_TEXT + newPassword;
+            mailBO.sendMail(addresses, Constants.MAIL_RESTORE_PASS_SUBCJECT, text);
+        } else {
+            throw new ValidationExeption("User with this username does not exist!");
+        }
     }
 
     private void validateUserRegistration(UserRegistrationDTO registrationDTO){
@@ -246,13 +270,23 @@ public class UserBOImpl implements UserBO{
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
 
-    private void deleteRememberMe(){
-        UserEntity userEntity = getLoggedUser();
+    private void deleteRememberMe(UserEntity userEntity){
         logger.info("*** deleteRememberMe(), for userName: " + userEntity.getUsername());
         RememberMeEntity rememberMeEntity = rememberMeDAO.findByLogin(userEntity.getUsername());
         if (rememberMeEntity != null){
             rememberMeDAO.deleteById(rememberMeEntity.getId());
         }
+    }
+
+    private void persistNewPassword(UserEntity userEntity, String newPassword){
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        userEntity.setPassword(encodedPassword);
+        userDAO.persist(userEntity);
+    }
+
+    private String generateNewPassword(){
+        SecureRandom random = new SecureRandom();
+        return new BigInteger(40, random).toString(32);
     }
 
 }

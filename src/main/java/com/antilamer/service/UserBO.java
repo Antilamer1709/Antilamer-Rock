@@ -7,6 +7,7 @@ import com.antilamer.entity.UserEntity;
 import com.antilamer.exeptions.ValidationExeption;
 import org.springframework.http.ResponseEntity;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,4 +21,6 @@ public interface UserBO {
     UserEntity getLoggedUser();
 
     String logout(HttpServletRequest request, HttpServletResponse response);
+
+    void restoreUserPassword(String login) throws MessagingException;
 }

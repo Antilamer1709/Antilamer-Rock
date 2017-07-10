@@ -7,9 +7,10 @@
     <link href="CSS/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="http://cdn.phpoll.com/css/animate.css" rel="stylesheet">
     <link href="bower_components/ngtoast/dist/ngToast.min.css" rel="stylesheet">
-    <link href="bower_components/angular-bootstrap-toggle-switch/style/bootstrap2/angular-toggle-switch-bootstrap-2.css" rel="stylesheet">
+    <link href="bower_components/angular-bootstrap-toggle-switch/style/bootstrap2/angular-toggle-switch-bootstrap-2.css"
+          rel="stylesheet">
     <link href="bower_components/angular-ui-grid/ui-grid.min.css" rel="stylesheet">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="images/koza.png">
 </head>
 
@@ -102,37 +103,69 @@
                             <div class="col-lg-12">
                                 <div class="text-center"><h3><b>Log In</b></h3></div>
                                 <form id="ajax-login-form">
+
                                     <div class="form-group">
                                         <label for="username">Username</label>
-                                        <input type="text" ng-model="login.username" name="username" id="username" tabindex="1"
-                                               class="form-control" placeholder="Username" value="" autocomplete="off">
+                                        <input type="text" ng-model="login.username" name="username" id="username"
+                                               tabindex="1"
+                                               class="form-control" placeholder="Username" value=""
+                                               autocomplete="off">
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="password" ng-model="login.password" name="password" id="password" tabindex="2"
-                                               class="form-control" placeholder="Password" autocomplete="off">
-                                    </div>
+                                    <div ng-show="!showForgotPassword">
 
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-xs-7">
-                                                <input type="checkbox" ng-model="login.rememberMe" tabindex="3" name="remember" id="remember">
-                                                <label for="remember"> Remember Me</label>
+                                        <div class="form-group">
+                                            <label for="password">Password</label>
+                                            <input type="password" ng-model="login.password" name="password"
+                                                   id="password" tabindex="2"
+                                                   class="form-control" placeholder="Password" autocomplete="off">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-xs-7">
+                                                    <input type="checkbox" ng-model="login.rememberMe" tabindex="3"
+                                                           name="remember" id="remember">
+                                                    <label for="remember"> Remember Me</label>
+                                                </div>
+                                                <div class="col-xs-5 pull-right">
+                                                    <input ng-click="submitLogin()" type="submit" name="login-submit"
+                                                           id="login-submit" tabindex="4"
+                                                           class="form-control btn btn-success" value="Log In">
+                                                </div>
                                             </div>
-                                            <div class="col-xs-5 pull-right">
-                                                <input ng-click="submitLogin()" type="submit" name="login-submit" id="login-submit" tabindex="4"
-                                                       class="form-control btn btn-success" value="Log In">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="text-center">
+                                                        <p class="pointer" ng-click="toggleForgotPassword()">Forgot Password?</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="text-center">
-                                                    <a tabindex="5"
-                                                       class="forgot-password">Forgot Password?</a>
+                                    <div ng-show="showForgotPassword">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-xs-5 pull-right">
+                                                    <input ng-click="forgotPasswordSubmit()" type="submit"
+                                                           name="forgotPasswordSubmit"
+                                                           id="forgotPasswordSubmit" tabindex="4"
+                                                           ng-disabled="disabledForgotPassword"
+                                                           class="form-control btn btn-success" value="Send mail">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="text-center">
+                                                        <p class="pointer" ng-click="toggleForgotPassword()">Return to login</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

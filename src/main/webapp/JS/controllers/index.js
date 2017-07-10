@@ -10,6 +10,8 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
     $scope.user.logged = false;
     $scope.login = {};
     $scope.password = "";
+    $scope.showForgotPassword = false;
+    $scope.disabledForgotPassword = false;
 
 
     ngToast.settings.horizontalPosition = 'center';
@@ -56,4 +58,20 @@ angular.module('mvcApp').controller('IndexCtrl', ['$scope', '$rootScope', 'UserS
         })
     };
     $scope.getLoggerUser();
+
+    $scope.toggleForgotPassword = function () {
+        $scope.showForgotPassword = !$scope.showForgotPassword;
+    };
+
+    $scope.forgotPasswordSubmit = function () {
+        $scope.disabledForgotPassword = true;
+        UserService.forgotPassword($scope.login.username, function (res) {
+            CommonService.showToast('success', 'Email was sent');
+            $scope.disabledForgotPassword = false;
+            $scope.toggleForgotPassword();
+        }, function (err) {
+            $scope.disabledForgotPassword = false;
+            $rootScope.error = err;
+        })
+    };
 }]);

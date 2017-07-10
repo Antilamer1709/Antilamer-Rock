@@ -378,3 +378,7 @@ ul.dropdown-lr {
     left: 40%;
     margin-top: 15px;
 }
+
+.pointer{
+    cursor: pointer;
+}
