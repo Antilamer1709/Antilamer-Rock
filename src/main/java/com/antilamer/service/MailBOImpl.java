@@ -1,5 +1,6 @@
 package com.antilamer.service;
 
+import com.antilamer.utils.GMailAuthenticator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.util.Properties;
@@ -47,11 +48,6 @@ public class MailBOImpl implements MailBO {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
 
-        session = Session.getDefaultInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(serverEmail, password);
-                    }
-                });
+        session = Session.getInstance(props, new GMailAuthenticator(serverEmail, password));
     }
 }
