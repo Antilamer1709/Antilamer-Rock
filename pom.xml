@@ -137,15 +137,48 @@
 			<version>1.4</version>
 		</dependency>
 
-
-
 	</dependencies>
 
+	<distributionManagement>
+		<repository>
+			<id>ssh-repository</id>
+			<url>scp://antilamer.tk/home/ubuntu/apache-tomcat-8.5.16/webapps/</url>
+		</repository>
+	</distributionManagement>
+
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>2.8</version>
+			</extension>
+		</extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>wagon-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<serverId>ssh-repository</serverId>
+					<fromFile>${project.build.directory}/${project.build.finalName}.war</fromFile>
+					<url>scp://antilamer.tk/home/ubuntu/apache-tomcat-8.5.16/webapps/</url>
+					<toFile>ROOT.war</toFile>
+				</configuration>
+				<executions>
+					<execution>
+						<id>upload-war-to-server</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>upload-single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
